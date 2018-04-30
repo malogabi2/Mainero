@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><BFEGetLast_IDResponse xmlns="http://ar.gov.afip.dif.bfe/"><BFEGetLast_IDResult><BFEResultGet><Id>3301</Id></BFEResultGet><BFEErr><ErrCode>0</ErrCode><ErrMsg>OK</ErrMsg></BFEErr><BFEEvents><EventCode>0</EventCode><EventMsg>OK</EventMsg></BFEEvents></BFEGetLast_IDResult></BFEGetLast_IDResponse></soap:Body></soap:Envelope>
+Id=3301
+ErrCode=0
+ErrMsg=OK
+EventCode=0
+EventMsg=OK
+<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><BFEGetLast_IDResponse xmlns="http://ar.gov.afip.dif.bfe/"><BFEGetLast_IDResult><BFEResultGet><Id>3301</Id></BFEResultGet><BFEErr><ErrCode>0</ErrCode><ErrMsg>OK</ErrMsg></BFEErr><BFEEvents><EventCode>0</EventCode><EventMsg>OK</EventMsg></BFEEvents></BFEGetLast_IDResult></BFEGetLast_IDResponse></soap:Body></soap:Envelope>
+Id=3301
+ErrCode=0
+ErrMsg=OK
+EventCode=0
+EventMsg=OK
+Id=3301
+ErrCode=0
+ErrMsg=OK
+EventCode=0
+EventMsg=OK

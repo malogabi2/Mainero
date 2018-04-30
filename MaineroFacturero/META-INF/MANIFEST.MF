@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.9.4
+Created-By: 1.8.0_111-8u111-b14-2ubuntu0.16.04.2-b14 (Oracle Corporati
+ on)
+Class-Path: lib/JimiProClasses.jar lib/activation.jar lib/axis-ant.jar
+  lib/axis-jaxrpc-1.4.jar lib/axis.jar lib/bcmail-jdk15.jar lib/bcprov
+ -jdk16-139.jar lib/bouncycastle.jar lib/bsf.jar lib/castor-0.9.5.2.ja
+ r lib/commons-codec-1.2.jar lib/commons-discovery-0.2.jar lib/commons
+ -discovery.jar lib/commons-httpclient-3.0-rc2.jar lib/commons-lang-1_
+ 0.jar lib/commons-logging-1.0.4.jar lib/commons-logging-1.1.1-1.0.0.j
+ ar lib/commons-logging.jar lib/commons-net-1.0.0-dev.jar lib/dom4j-1.
+ 6.1.jar lib/hsqldb-1.6.1.jar lib/httpunit.jar lib/ibmjsse.jar lib/jac
+ kcess-1.1.18.jar lib/javaee.jar lib/javax.jms.jar lib/jaxen.jar lib/j
+ axrpc.jar lib/junit-3.8.1.jar lib/log4j-1.2.8.jar lib/mail.jar lib/ma
+ ilapi_1_3_1.jar lib/mysql-connector-java-5.1.17-bin.jar lib/saaj.jar 
+ lib/servlet.jar lib/sqljdbc4.jar lib/swingx-2007_05_01.jar lib/ucanac
+ cess-3.0.7.jar lib/wsdl4j-1.5.1.jar lib/wsdl4j.jar lib/xercesImpl-2.6
+ .2.jar lib/xml-apis-2.6.2.jar lib/xml-apis-ext.jar lib/xml-apis.jar l
+ ib/xml-commons-resolver-1.1.jar
+X-COMMENT: Main-Class will be added automatically by build
+Main-Class: Proyecto.mainerofacturero.MaineroFacturero
+

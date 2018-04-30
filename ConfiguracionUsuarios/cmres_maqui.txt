@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><FECAESolicitarResponse xmlns="http://ar.gov.afip.dif.FEV1/"><FECAESolicitarResult><FeCabResp><Cuit>30501730080</Cuit><PtoVta>19</PtoVta><CbteTipo>3</CbteTipo><FchProceso>20171220102703</FchProceso><CantReg>1</CantReg><Resultado>A</Resultado><Reproceso>N</Reproceso></FeCabResp><FeDetResp><FECAEDetResponse><Concepto>1</Concepto><DocTipo>80</DocTipo><DocNro>30506489519</DocNro><CbteDesde>4076</CbteDesde><CbteHasta>4076</CbteHasta><CbteFch>20171220</CbteFch><Resultado>A</Resultado><CAE>67510373036644</CAE><CAEFchVto>20171230</CAEFchVto></FECAEDetResponse></FeDetResp></FECAESolicitarResult></FECAESolicitarResponse></soap:Body></soap:Envelope>
+Resultado=A
+Resultado=A
+Reproceso=N
+Msg=
+CAE=67510373036644
+CAEFchVto=20171230
+<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><FECAESolicitarResponse xmlns="http://ar.gov.afip.dif.FEV1/"><FECAESolicitarResult><FeCabResp><Cuit>30501730080</Cuit><PtoVta>19</PtoVta><CbteTipo>3</CbteTipo><FchProceso>20171220102703</FchProceso><CantReg>1</CantReg><Resultado>A</Resultado><Reproceso>N</Reproceso></FeCabResp><FeDetResp><FECAEDetResponse><Concepto>1</Concepto><DocTipo>80</DocTipo><DocNro>30506489519</DocNro><CbteDesde>4076</CbteDesde><CbteHasta>4076</CbteHasta><CbteFch>20171220</CbteFch><Resultado>A</Resultado><CAE>67510373036644</CAE><CAEFchVto>20171230</CAEFchVto></FECAEDetResponse></FeDetResp></FECAESolicitarResult></FECAESolicitarResponse></soap:Body></soap:Envelope>
+Resultado=A
+Resultado=A
+Resultado=A
+Resultado=A
+Reproceso=N
+Reproceso=N
+Msg=
+CAE=67510373036644
+CAE=67510373036644
+CAEFchVto=20171230
+CAEFchVto=20171230

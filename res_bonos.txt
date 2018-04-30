@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><BFEAuthorizeResponse xmlns="http://ar.gov.afip.dif.bfe/"><BFEAuthorizeResult><BFEResultAuth><Id>10942</Id><Cuit>30501730080</Cuit><Cae>67510338942329</Cae><Fch_venc_Cae>20171229</Fch_venc_Cae><Fch_cbte>20171219</Fch_cbte><Resultado>A</Resultado><Reproceso>S</Reproceso><Obs>13</Obs></BFEResultAuth><BFEErr><ErrCode>0</ErrCode><ErrMsg>OK</ErrMsg></BFEErr><BFEEvents><EventCode>0</EventCode><EventMsg>Ok</EventMsg></BFEEvents></BFEAuthorizeResult></BFEAuthorizeResponse></soap:Body></soap:Envelope>
+Id=10942
+Cuit=30501730080
+Cae=67510338942329
+Fch_venc_Cae=20171229
+Fch_cbte=20171219
+Resultado=A
+Reproceso=S
+Obs=13
+ErrCode=0
+ErrMsg=OK
+<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><BFEAuthorizeResponse xmlns="http://ar.gov.afip.dif.bfe/"><BFEAuthorizeResult><BFEResultAuth><Id>10942</Id><Cuit>30501730080</Cuit><Cae>67510338942329</Cae><Fch_venc_Cae>20171229</Fch_venc_Cae><Fch_cbte>20171219</Fch_cbte><Resultado>A</Resultado><Reproceso>S</Reproceso><Obs>13</Obs></BFEResultAuth><BFEErr><ErrCode>0</ErrCode><ErrMsg>OK</ErrMsg></BFEErr><BFEEvents><EventCode>0</EventCode><EventMsg>Ok</EventMsg></BFEEvents></BFEAuthorizeResult></BFEAuthorizeResponse></soap:Body></soap:Envelope>
+Id=10942
+Id=10942
+Cuit=30501730080
+Cuit=30501730080
+Cae=67510338942329
+Cae=67510338942329
+Fch_venc_Cae=20171229
+Fch_venc_Cae=20171229
+Fch_cbte=20171219
+Fch_cbte=20171219
+Resultado=A
+Resultado=A
+Reproceso=S
+Reproceso=S
+Obs=13
+Obs=13
+ErrCode=0
+ErrCode=0
+ErrMsg=OK
+ErrMsg=OK

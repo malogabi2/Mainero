@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><FEParamGetTiposDocResponse xmlns="http://ar.gov.afip.dif.FEV1/"><FEParamGetTiposDocResult><Errors><Err><Code>600</Code><Msg>ValidacionDeToken: No validaron las fechas del token GenTime, ExpTime, NowUTC: 1362081932 (2/28/2013 8:05:02 PM), 1362125192 (3/1/2013 8:06:32 AM), 3/6/2013 9:19:00 PM</Msg></Err></Errors></FEParamGetTiposDocResult></FEParamGetTiposDocResponse></soap:Body></soap:Envelope>
+Code=600
+Msg=ValidacionDeToken: No validaron las fechas del token GenTime, ExpTime, NowUTC: 1362081932 (2/28/2013 8:05:02 PM), 1362125192 (3/1/2013 8:06:32 AM), 3/6/2013 9:19:00 PM
+<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><FEParamGetTiposDocResponse xmlns="http://ar.gov.afip.dif.FEV1/"><FEParamGetTiposDocResult><Errors><Err><Code>600</Code><Msg>ValidacionDeToken: No validaron las fechas del token GenTime, ExpTime, NowUTC: 1362081932 (2/28/2013 8:05:02 PM), 1362125192 (3/1/2013 8:06:32 AM), 3/6/2013 9:19:00 PM</Msg></Err></Errors></FEParamGetTiposDocResult></FEParamGetTiposDocResponse></soap:Body></soap:Envelope>
+Code=600
+Msg=ValidacionDeToken: No validaron las fechas del token GenTime, ExpTime, NowUTC: 1362081932 (2/28/2013 8:05:02 PM), 1362125192 (3/1/2013 8:06:32 AM), 3/6/2013 9:19:00 PM
+Code=600
+Msg=ValidacionDeToken: No validaron las fechas del token GenTime, ExpTime, NowUTC: 1362081932 (2/28/2013 8:05:02 PM), 1362125192 (3/1/2013 8:06:32 AM), 3/6/2013 9:19:00 PM

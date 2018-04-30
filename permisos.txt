@@ -1,0 +1,2 @@
+1perminom=entrada
+1permipuerta=1
