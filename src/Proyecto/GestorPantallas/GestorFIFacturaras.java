@@ -33,8 +33,7 @@ public class GestorFIFacturaras {
             GestorDBFE_Electronica gesdb = new GestorDBFE_Electronica(this.config);
             if (gesdb.traerDatos() != null) {
                 this.facs = Utilerias.pasarObjetoAFacturas(gesdb.traerDatos());
-            }
-            gesdb.cerrarConector();
+            }            
         }
         catch (ClassNotFoundException ex) {
             Logger.getLogger(GestorFIFacturaras.class.getName()).log(Level.SEVERE, null, ex);

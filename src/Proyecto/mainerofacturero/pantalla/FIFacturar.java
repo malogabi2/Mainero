@@ -194,12 +194,7 @@ extends JInternalFrame {
         this.txt_productoCodigo = new JTextField();
         this.txt_productoNomenclador = new JTextField();
         this.bt_help_consultarComprobanteAfip = new JButton();
-        this.addComponentListener(new ComponentAdapter(){
-
-            @Override
-            public void componentHidden(ComponentEvent evt) {
-                FIFacturar.this.formComponentHidden(evt);
-            }
+        this.addComponentListener(new ComponentAdapter(){           
 
             @Override
             public void componentShown(ComponentEvent evt) {
@@ -555,11 +550,7 @@ extends JInternalFrame {
 
     private void txt_comproNumFocusLost(FocusEvent evt) {
         this.facturaProcesa();
-    }
-
-    private void formComponentHidden(ComponentEvent evt) {
-        this.gestor.cerrarConexiones();
-    }
+    }   
 
     private void txt_productoCodigoKeyPressed(KeyEvent evt) {
         if (this.txt_productoCodigo.getText().length() > 0 && this.txt_productoNomenclador.getText().length() > 0) {

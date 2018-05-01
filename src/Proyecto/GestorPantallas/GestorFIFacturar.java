@@ -313,9 +313,5 @@ public class GestorFIFacturar {
         }
         return false;
     }
-
-    public void cerrarConexiones() {
-        this.conf.getGestorDBFacturaElect().cerrarConector();
-    }
+   
 }
-

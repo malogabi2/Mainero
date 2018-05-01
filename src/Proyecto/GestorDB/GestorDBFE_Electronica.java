@@ -26,12 +26,14 @@ extends GestorDB {
         super(cong);
     }
 
-    private Producto[] buscaProducto(Factura fac) {
+    private Producto[] buscaProducto(Factura fac) {        
+        ArrayList<Producto> detpro = new ArrayList<Producto>();
+        String con = "select ma_codigo, ma_nomenclatura from maquinas_vta where ma_codigo=" + fac.getProducto();
+        System.out.println(con);
+        ResultSet rs;
         try {
-            String con = "select ma_codigo, ma_nomenclatura from maquinas_vta where ma_codigo=" + fac.getProducto();
-            System.out.println(con);
-            ResultSet rs = this.getConectar().Select(con);
-            ArrayList<Producto> detpro = new ArrayList<Producto>();
+            rs = this.getConectar().Select(con);        
+            
             while (rs.next()) {
                 Producto pro = new Producto();
                 pro.setCodigoProducto(fac.getProducto());
@@ -40,15 +42,22 @@ extends GestorDB {
                 pro.setNomenclador(num);
                 detpro.add(pro);
             }
-            return Utilerias.pasarObjetoAProducto(detpro.toArray());
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(GestorDBFE_Electronica.class.getName()).log(Level.SEVERE, null, ex);        
         }
-        catch (SQLException ex) {
-            Logger.getLogger(GestorDBFE_Electronica.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
+        finally {
+                try {
+                    this.getConectar().cerrarConexion();
+                } catch (ClassNotFoundException | SQLException ex) {
+                    Logger.getLogger(GestorDBFE_Electronica.class.getName()).log(Level.SEVERE, null, ex);
+                }
         }
+       
+        return Utilerias.pasarObjetoAProducto(detpro.toArray());        
+       
     }
 
-    private DetalleFactura[] buscaDetalles(Factura fac) {
+    private DetalleFactura[] buscaDetalles(Factura fac) {      
         try {
             String con = "select ft_electas.ftt_iva, ft_electas.ftt_rg3337, ft_electas.ftt_brutos,ft_electas.ftt_interno from ft_electas where  ft_electas.ftt_tipo=" + fac.getTipo_comprobante() + " and ft_electas.ftt_boca=" + fac.getSuc_comprobante() + " and ft_electas.ftt_comprobante=" + fac.getNum_nombrante();
             System.out.println(con);
@@ -66,11 +75,11 @@ extends GestorDB {
                 detfac.add(deetfac);
             }
             return Utilerias.pasarObjetoADetalleFacturas(detfac.toArray());
-        }
-        catch (SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(GestorDBFE_Electronica.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
             return null;
-        }
+        }   
     }
 
     @Override

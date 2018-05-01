@@ -9,12 +9,10 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public abstract class GestorDB {
-    private Conectar conectar = new Conectar();
+public abstract class GestorDB {   
     private Configuracion configu;
 
-    public GestorDB(Configuracion config) throws ClassNotFoundException, SQLException {
-        this.getConectar().conectarAccess(config.getNombreODBC(), config.getUsuarioODBC(), config.getClaveODBC());
+    public GestorDB(Configuracion config) {        
         this.configu = config;
     }
 
@@ -26,12 +24,16 @@ public abstract class GestorDB {
 
     public abstract int guardar(Object var1);
 
-    protected final Conectar getConectar() {        
-        return this.conectar;
-    }
-
-    public void cerrarConector() {
-        this.conectar.cerrarConexion();
+    protected final Conectar getConectar() {
+        try {
+            Conectar conectar = new Conectar();
+            conectar.conectarAccess(configu.getNombreODBC(), configu.getUsuarioODBC(), configu.getClaveODBC());
+            return conectar;
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(GestorDB.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public Configuracion getConfigu() {
