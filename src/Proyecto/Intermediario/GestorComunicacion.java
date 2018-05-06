@@ -200,7 +200,7 @@ public class GestorComunicacion {
         err.addMensajeError("Guardando en base de datos la respuesta campos: " + lr.getCamposResul() + " resultado: " + lr.getValoresResul() ); 
         configur.getGestorDBFacturaElect().guardarCae(lr.getCamposResul(), lr.getValoresResul(), 
                 facturaElegida.getTipo_comprobante(), facturaElegida.getSuc_comprobante(), facturaElegida.getNum_nombrante(),
-                configur.esFiscalLaSucursal(Integer.valueOf(facturaElegida.getSuc_comprobante())), err);     
+                configur.esFiscalLaSucursal(Integer.valueOf(facturaElegida.getSuc_comprobante())), err);
     }
 }
 

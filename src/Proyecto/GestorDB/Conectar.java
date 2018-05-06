@@ -16,7 +16,7 @@ public class Conectar {
     private Connection conexion = null;
     private Statement sentencia = null;
     private ResultSet rs = null;
-
+    private boolean conexionActiva = false;
     public Conectar() {
         System.out.println("Conecto");
     }
@@ -36,6 +36,7 @@ public class Conectar {
         Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
         String url = "jdbc:odbc:" + nombreBD;
         this.conexion = DriverManager.getConnection(url, usuario, clave);
+        conexionActiva = true;
     }
 
     public void conectarPostgres(String maquina, String nombreBD, String usuario, String clave) throws SQLException {
@@ -106,7 +107,10 @@ public class Conectar {
     public void cerrarConexion() {
         System.out.println("Cierro conexion");
         try {
-            this.conexion.close();
+            if(!conexion.isClosed()) {
+                this.conexion.close();
+                conexionActiva = false;
+            }            
         }
         catch (Exception e) {
             System.err.println("'cerrarConexion()' Error al intentar cerrar conexion. " + e.getMessage());
@@ -284,6 +288,10 @@ public class Conectar {
     protected void finalize() throws Throwable {
         this.cerrarConexion();
         super.finalize();
+    }
+    
+    public boolean isActivaLaConexion() {
+        return conexionActiva;        
     }
 }
 

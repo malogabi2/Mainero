@@ -25,15 +25,13 @@ public abstract class GestorDB {
     public abstract int guardar(Object var1);
 
     protected final Conectar getConectar() {
+        Conectar conectar = new Conectar();
         try {
-            Conectar conectar = new Conectar();
             conectar.conectarAccess(configu.getNombreODBC(), configu.getUsuarioODBC(), configu.getClaveODBC());
-            return conectar;
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(GestorDB.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(GestorDB.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return conectar;
     }
 
     public Configuracion getConfigu() {
