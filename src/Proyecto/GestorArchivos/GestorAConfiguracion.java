@@ -25,6 +25,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.apache.log4j.Layout;
+import utiles.Bitacora;
+import utiles.LoggerBitacora;
 
 public class GestorAConfiguracion {
     public GestorAConfiguracion(Configuracion configuracion) {
@@ -81,6 +83,8 @@ public class GestorAConfiguracion {
     }
 
     public void FileCopy(String sourceFile, String destinationFile) {
+        LoggerBitacora.log("Desde: " + sourceFile, Level.INFO);
+        LoggerBitacora.log("Hacia: " + destinationFile, Level.INFO);
         System.out.println("Desde: " + sourceFile);
         System.out.println("Hacia: " + destinationFile);
         try {

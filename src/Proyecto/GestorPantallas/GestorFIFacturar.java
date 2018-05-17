@@ -94,7 +94,7 @@ public class GestorFIFacturar {
 
     public void buscarComprobante(String comprobanteNum, int indexSucursal, Object indexTipoComprobante) {
         this.facturaElegida = null;
-        this.facturaElegida = Utilerias.pasarObjetoAFacturas(this.conf.getGestorDBFacturaElect().traerDatos(new Object[]{comprobanteNum, this.conf.getUsuarioLogueado().mostrarItemSucursal(indexSucursal).getNumero(), ((TipoComprobante)indexTipoComprobante).getNumeroReal()}))[0];
+        this.facturaElegida = Utilerias.pasarObjetoAFacturas(this.conf.getGestorDBFacturaElectParaBuscar().traerDatos(new Object[]{comprobanteNum, this.conf.getUsuarioLogueado().mostrarItemSucursal(indexSucursal).getNumero(), ((TipoComprobante)indexTipoComprobante).getNumeroReal()}))[0];
     }
 
     public String getCodMoneda() {

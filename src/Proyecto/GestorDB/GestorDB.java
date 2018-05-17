@@ -10,10 +10,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public abstract class GestorDB {   
-    private Configuracion configu;
-
+    private static Configuracion configu;
+    private static Conectar conectar;
+    static {
+        conectar = new Conectar();       
+    }
     public GestorDB(Configuracion config) {        
         this.configu = config;
+         try {
+            conectar.conectarAccess(configu.getNombreODBC(), configu.getUsuarioODBC(), configu.getClaveODBC());
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(GestorDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public abstract Object[] traerDatos();
@@ -25,12 +33,6 @@ public abstract class GestorDB {
     public abstract int guardar(Object var1);
 
     protected final Conectar getConectar() {
-        Conectar conectar = new Conectar();
-        try {
-            conectar.conectarAccess(configu.getNombreODBC(), configu.getUsuarioODBC(), configu.getClaveODBC());
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(GestorDB.class.getName()).log(Level.SEVERE, null, ex);
-        }
         return conectar;
     }
 

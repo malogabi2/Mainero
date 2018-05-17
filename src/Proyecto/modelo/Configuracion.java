@@ -367,7 +367,12 @@ public class Configuracion {
         this.claveODBC = pswODBC;
     }
 
-    public GestorDBFE_Electronica getGestorDBFacturaElect() {
+    public GestorDBFE_Electronica getGestorDBFacturaElectParaGuardar() {
+        this.gestorDBFacturaElect.ponerEn0Intentos();
+        return this.gestorDBFacturaElect;
+    }
+    
+     public GestorDBFE_Electronica getGestorDBFacturaElectParaBuscar() {
         return this.gestorDBFacturaElect;
     }
 }

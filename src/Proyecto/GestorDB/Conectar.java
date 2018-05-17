@@ -11,6 +11,8 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
+import java.util.logging.Level;
+import utiles.LoggerBitacora;
 
 public class Conectar {
     private Connection conexion = null;
@@ -104,7 +106,7 @@ public class Conectar {
         }
     }
 
-    public void cerrarConexion() {
+    public void cerrarConexiones() {
         System.out.println("Cierro conexion");
         try {
             if(!conexion.isClosed()) {
@@ -286,7 +288,7 @@ public class Conectar {
     }
 
     protected void finalize() throws Throwable {
-        this.cerrarConexion();
+        this.cerrarConexiones();
         super.finalize();
     }
     
