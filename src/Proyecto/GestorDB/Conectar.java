@@ -3,35 +3,47 @@
  */
 package Proyecto.GestorDB;
 
-import java.io.PrintStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
-import java.util.logging.Level;
-import utiles.LoggerBitacora;
+import org.apache.log4j.Priority;
+import utiles.logger.LoggerBitacora;
 
 public class Conectar {
+
     private Connection conexion = null;
     private Statement sentencia = null;
     private ResultSet rs = null;
     private boolean conexionActiva = false;
+
     public Conectar() {
+        LoggerBitacora.getInstance(Conectar.class).logueadorMainero.log("un Mensaje", Priority.INFO,
+                "Conecto", null);
+
         System.out.println("Conecto");
     }
 
     public void conectarInformix(String maquina, String nombreBD, String usuario, String clave) throws ClassNotFoundException, SQLException {
         String url = "jdbc:informix-sqli://" + maquina + ":1900:INFORMIXSERVER=" + nombreBD + ";user=" + usuario + ";password=" + clave + "";
         System.out.println(url);
+
+        LoggerBitacora.getInstance(Conectar.class).logueadorMainero.log("un Mensaje", Priority.INFO,
+                "conectarInformix url " + url, null);
+
         Class.forName("com.informix.jdbc.IfxDriver");
+        LoggerBitacora.getInstance(Conectar.class).logueadorMainero.log("un Mensaje", Priority.INFO,
+                "Driver OK", null);
         System.out.println("Driver OK");
         Properties pr = new Properties();
         pr.put("OPTOFC", "1");
         this.conexion = DriverManager.getConnection(url, pr);
-        System.out.println("catalog " + this.conexion.getCatalog());
+
+        LoggerBitacora.getInstance(Conectar.class).logueadorMainero.log("un Mensaje", Priority.INFO,
+                "catalog " + this.conexion.getCatalog(), null);
+
     }
 
     public void conectarAccess(String nombreBD, String usuario, String clave) throws ClassNotFoundException, SQLException {
@@ -44,8 +56,7 @@ public class Conectar {
     public void conectarPostgres(String maquina, String nombreBD, String usuario, String clave) throws SQLException {
         try {
             Class.forName("org.postgresql.Driver");
-        }
-        catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             System.err.println("'conectarPostgres()' Error al intentar cargar Driver. " + e.getMessage());
             e.printStackTrace();
         }
@@ -56,8 +67,7 @@ public class Conectar {
     public boolean conectarMySQL(String maquina, String nombreBD, String usuario, String clave) {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-        }
-        catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             System.err.println("'conectarMySQl()' Error al intentar cargar Driver. " + e.getMessage());
             e.printStackTrace();
         }
@@ -68,8 +78,7 @@ public class Conectar {
             String selectMethod = "cursor";
             this.conexion = DriverManager.getConnection(url, userName, password);
             return true;
-        }
-        catch (Exception error) {
+        } catch (Exception error) {
             System.out.println("Error: no se ha podido crear la conexion con " + nombreBD + " server: " + maquina + " " + error.getMessage() + ".\n");
             return false;
         }
@@ -91,32 +100,32 @@ public class Conectar {
     public void conectarHSQL(String archivo, String usuario, String clave) {
         try {
             Class.forName("org.hsqldb.jdbcDriver");
-        }
-        catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             System.err.println("'conectarHSQL()' Error al intentar cargar Driver. " + e.getMessage());
             e.printStackTrace();
         }
         try {
             String url = "jdbc:hsqldb:" + archivo;
             this.conexion = DriverManager.getConnection(url, usuario, clave);
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.err.println("'conectarHSQL()' Error al intentar conectarse. " + e.getMessage());
             e.printStackTrace();
         }
     }
 
     public void cerrarConexiones() {
+        LoggerBitacora.getInstance(Conectar.class).logueadorMainero.log("un Mensaje", Priority.INFO,
+                "Cierro conexion", null);
+
         System.out.println("Cierro conexion");
         try {
-            if(!conexion.isClosed()) {
+            if (!conexion.isClosed()) {
                 this.conexion.close();
                 conexionActiva = false;
-            }            
-        }
-        catch (Exception e) {
-            System.err.println("'cerrarConexion()' Error al intentar cerrar conexion. " + e.getMessage());
-            e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            LoggerBitacora.getInstance(Conectar.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                    "\"'cerrarConexion()' Error al intentar cerrar conexion. \" + e.getMessage()", e);
         }
     }
 
@@ -125,8 +134,7 @@ public class Conectar {
             this.sentencia = this.conexion.createStatement(1005, 1008);
             this.rs = this.sentencia.executeQuery("SELECT * FROM " + nombreTabla);
             this.rs.moveToInsertRow();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.err.println("'iniciarBloque()' Error en iniciar bloque. " + e.getMessage());
             e.printStackTrace();
         }
@@ -135,8 +143,7 @@ public class Conectar {
     public void insertarCampo(String nombreColumna, Object valorColumna) {
         try {
             this.rs.updateObject(nombreColumna, valorColumna);
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.err.println("'insertarCampo()' Error al intentar insertar campo a la BD. " + e.getMessage());
             e.printStackTrace();
         }
@@ -149,8 +156,7 @@ public class Conectar {
                 this.rs.close();
                 this.sentencia.close();
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.err.println("'cerrarBloque()' eRROR al guardar en la BD. " + e.getMessage());
             e.printStackTrace();
         }
@@ -161,11 +167,12 @@ public class Conectar {
             this.sentencia = this.conexion.createStatement(1005, 1007);
             this.rs = this.sentencia.executeQuery("SELECT " + nombreColumna + " FROM " + nombreTabla);
             while (this.rs.next()) {
-                if (!this.rs.getObject(1).equals(nombreCampoBuscado)) continue;
+                if (!this.rs.getObject(1).equals(nombreCampoBuscado)) {
+                    continue;
+                }
                 return true;
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.err.println("'buscarCampo()' Error al bucar campo. " + e.getMessage());
             e.printStackTrace();
         }
@@ -178,11 +185,12 @@ public class Conectar {
             this.sentencia = this.conexion.createStatement(1005, 1007);
             this.rs = this.sentencia.executeQuery("SELECT " + nombreColumna + " FROM " + nombreTabla);
             while (this.rs.next()) {
-                if (!this.rs.getObject(1).equals(nombreCampoBuscado)) continue;
+                if (!this.rs.getObject(1).equals(nombreCampoBuscado)) {
+                    continue;
+                }
                 ++cantidad;
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.err.println("'buscarCampo()' Error al bucar campo. " + e.getMessage());
             e.printStackTrace();
         }
@@ -194,12 +202,13 @@ public class Conectar {
             this.sentencia = this.conexion.createStatement(1005, 1008);
             this.rs = this.sentencia.executeQuery("SELECT * FROM " + nombreTabla);
             while (this.rs.next()) {
-                if (!this.rs.getObject(nombreColumna).equals(nombreCampoActual)) continue;
+                if (!this.rs.getObject(nombreColumna).equals(nombreCampoActual)) {
+                    continue;
+                }
                 this.rs.updateObject(nombreColumna, nombreCampoNuevo);
                 this.rs.updateRow();
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.err.println("'actualizarCampo()' Error al actualizar campo. " + e.getMessage());
             e.printStackTrace();
         }
@@ -210,17 +219,21 @@ public class Conectar {
             this.sentencia = this.conexion.createStatement(1005, 1008);
             this.rs = this.sentencia.executeQuery("SELECT " + nombreColumnaLLave + " FROM " + nombreTabla);
             while (this.rs.next()) {
-                if (!this.rs.getObject(1).toString().equals(nombreCampo.toString())) continue;
+                if (!this.rs.getObject(1).toString().equals(nombreCampo.toString())) {
+                    continue;
+                }
                 this.rs.deleteRow();
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.err.println("'eliminarCampo()' Error al eliminar campo. " + e.getMessage());
             e.printStackTrace();
         }
     }
 
     public ResultSet Select(String select) throws SQLException {
+        LoggerBitacora.getInstance(Conectar.class).logueadorMainero.log("un Mensaje", Priority.INFO,
+                    "Consulta sql: " + select , null);
+        
         this.sentencia = this.conexion.createStatement(1005, 1007);
         this.rs = this.sentencia.executeQuery(select);
         return this.rs;
@@ -274,8 +287,7 @@ public class Conectar {
                 }
                 ++j;
             }
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
@@ -291,9 +303,8 @@ public class Conectar {
         this.cerrarConexiones();
         super.finalize();
     }
-    
+
     public boolean isActivaLaConexion() {
-        return conexionActiva;        
+        return conexionActiva;
     }
 }
-

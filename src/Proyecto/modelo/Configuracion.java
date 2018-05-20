@@ -5,17 +5,12 @@ package Proyecto.modelo;
 
 import Proyecto.GestorDB.GestorDBFE_Electronica;
 import Proyecto.mainerofacturero.pantalla.DError;
-import Proyecto.modelo.Permisos;
-import Proyecto.modelo.Sucursal;
-import Proyecto.modelo.TipoComprobante;
-import Proyecto.modelo.TokenSign;
-import Proyecto.modelo.Usuario;
 import Proyecto.utilerias.Utilerias;
-import java.awt.Frame;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
+import org.apache.log4j.Priority;
+import utiles.logger.LoggerBitacora;
 
 public class Configuracion {
     private String archivoConfiguracionWs;
@@ -191,12 +186,16 @@ public class Configuracion {
             this.gestorDBFacturaElect = new GestorDBFE_Electronica(this);
         }
         catch (ClassNotFoundException ex) {
+            LoggerBitacora.getInstance(Configuracion.class).logueadorMainero.log("un Mensaje", Priority.FATAL,
+                        "Eror al conectar con base de Datos", ex);
             DError ed = new DError(null, false);
             ed.setMensajeUsuario("Error a Buscar Comprobante ClassNotFoundException");
             ed.setMensajeAdmin(ex.toString() + " - " + ex.getMessage());
             ed.setVisible(true);
         }
         catch (SQLException ex) {
+            LoggerBitacora.getInstance(Configuracion.class).logueadorMainero.log("un Mensaje", Priority.FATAL,
+                        "Eror al conectar con base de Datos", ex);
             DError ed = new DError(null, false);
             ed.setMensajeUsuario("Error a Buscar Comprobante 2SQLException");
             ed.setMensajeAdmin(ex.toString() + " - " + ex.getMessage());

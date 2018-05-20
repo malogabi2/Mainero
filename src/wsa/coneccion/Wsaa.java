@@ -11,17 +11,14 @@ package wsa.coneccion;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintStream;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.Properties;
+import org.apache.log4j.Priority;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
-import wsa.coneccion.AfipWsaaConeccion;
-import wsa.coneccion.ConeccionWSA;
-import wsa.coneccion.Encriptador;
+import utiles.logger.LoggerBitacora;
 
 public class Wsaa {
     private ConeccionWSA cargarConeccion(String archivoConf, String servicio) throws FileNotFoundException, IOException {
@@ -43,6 +40,8 @@ public class Wsaa {
     }
 
     private String[] leorespuesta(String respuesta) throws DocumentException {
+        LoggerBitacora.getInstance(Wsaa.class).logueadorMainero.log("un Mensaje", Priority.INFO,
+                                respuesta, null);
         System.out.println(respuesta);
         StringReader tokenReader = new StringReader(respuesta);
         Document tokenDoc = null;
@@ -50,6 +49,8 @@ public class Wsaa {
         String token = tokenDoc.valueOf("/loginTicketResponse/credentials/token");
         String sign = tokenDoc.valueOf("/loginTicketResponse/credentials/sign");
         String vencimiento = tokenDoc.valueOf("/loginTicketResponse/header/expirationTime");
+        LoggerBitacora.getInstance(Wsaa.class).logueadorMainero.log("un Mensaje", Priority.INFO,
+                                vencimiento, null);
         System.out.println(vencimiento);
         return new String[]{token, sign, vencimiento, respuesta};
     }

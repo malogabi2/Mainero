@@ -4,29 +4,21 @@
 package Proyecto.mainerofacturero.pantalla;
 
 import Proyecto.GestorPantallas.GestorFIFacturar;
+import Proyecto.Intermediario.GestorComunicacion;
 import Proyecto.modelo.Configuracion;
 import Proyecto.utilerias.Utilerias;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.Font;
-import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.net.URL;
 import javax.swing.BorderFactory;
-import javax.swing.ComboBoxModel;
 import javax.swing.GroupLayout;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -35,10 +27,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
-import javax.swing.border.Border;
+import org.apache.log4j.Priority;
+import utiles.logger.LoggerBitacora;
 
 public class FIFacturar
-extends JInternalFrame {
+        extends JInternalFrame {
+
     private GestorFIFacturar gestor;
     private JButton bt_buscaComprobante;
     private JButton bt_enviarFactura;
@@ -194,7 +188,7 @@ extends JInternalFrame {
         this.txt_productoCodigo = new JTextField();
         this.txt_productoNomenclador = new JTextField();
         this.bt_help_consultarComprobanteAfip = new JButton();
-        this.addComponentListener(new ComponentAdapter(){           
+        this.addComponentListener(new ComponentAdapter() {
 
             @Override
             public void componentShown(ComponentEvent evt) {
@@ -290,7 +284,7 @@ extends JInternalFrame {
         this.bt_help_buscaMonedas.setFont(new Font("Tahoma", 0, 14));
         this.bt_help_buscaMonedas.setIcon(new ImageIcon(this.getClass().getResource("/Proyecto/imagenes/signo de pregunta mini.jpg")));
         this.bt_help_buscaMonedas.setToolTipText("Consultar En Afip Proximo Numero");
-        this.bt_help_buscaMonedas.addActionListener(new ActionListener(){
+        this.bt_help_buscaMonedas.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -318,7 +312,7 @@ extends JInternalFrame {
         this.jLabel4.setText("Tipo Comprobante");
         this.jLabel5.setFont(new Font("Tahoma", 0, 14));
         this.jLabel5.setText("Sucursal/Boca");
-        this.cmb_tipoComprobante.addActionListener(new ActionListener(){
+        this.cmb_tipoComprobante.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -326,14 +320,14 @@ extends JInternalFrame {
             }
         });
         this.txt_comproNum.setFont(new Font("Tahoma", 0, 14));
-        this.txt_comproNum.addActionListener(new ActionListener(){
+        this.txt_comproNum.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent evt) {
                 FIFacturar.this.txt_comproNumActionPerformed(evt);
             }
         });
-        this.txt_comproNum.addFocusListener(new FocusAdapter(){
+        this.txt_comproNum.addFocusListener(new FocusAdapter() {
 
             @Override
             public void focusLost(FocusEvent evt) {
@@ -345,7 +339,7 @@ extends JInternalFrame {
         this.bt_help_comprobarProximoNumero.setFont(new Font("Tahoma", 0, 14));
         this.bt_help_comprobarProximoNumero.setIcon(new ImageIcon(this.getClass().getResource("/Proyecto/imagenes/signo de pregunta mini.jpg")));
         this.bt_help_comprobarProximoNumero.setToolTipText("Consultar En Afip Proximo Numero");
-        this.bt_help_comprobarProximoNumero.addActionListener(new ActionListener(){
+        this.bt_help_comprobarProximoNumero.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -353,7 +347,7 @@ extends JInternalFrame {
             }
         });
         this.bt_buscaComprobante.setIcon(new ImageIcon(this.getClass().getResource("/Proyecto/imagenes/buscar Archivos mini.gif")));
-        this.bt_buscaComprobante.addActionListener(new ActionListener(){
+        this.bt_buscaComprobante.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -376,7 +370,7 @@ extends JInternalFrame {
         this.bt_help_tiposDocumento.setFont(new Font("Tahoma", 0, 14));
         this.bt_help_tiposDocumento.setIcon(new ImageIcon(this.getClass().getResource("/Proyecto/imagenes/signo de pregunta mini.jpg")));
         this.bt_help_tiposDocumento.setToolTipText("Consultar En Afip Tipos Doc");
-        this.bt_help_tiposDocumento.addActionListener(new ActionListener(){
+        this.bt_help_tiposDocumento.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -390,7 +384,7 @@ extends JInternalFrame {
         this.bt_help_tiposIva.setFont(new Font("Tahoma", 0, 14));
         this.bt_help_tiposIva.setIcon(new ImageIcon(this.getClass().getResource("/Proyecto/imagenes/signo de pregunta mini.jpg")));
         this.bt_help_tiposIva.setToolTipText("Consultar En Afip Tipo Responsable IVA");
-        this.bt_help_tiposIva.addActionListener(new ActionListener(){
+        this.bt_help_tiposIva.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -412,7 +406,7 @@ extends JInternalFrame {
         this.lbl_error.setForeground(new Color(255, 51, 51));
         this.bt_enviarFactura.setIcon(new ImageIcon(this.getClass().getResource("/Proyecto/imagenes/afip.png")));
         this.bt_enviarFactura.setText("Pedir Autorizacion");
-        this.bt_enviarFactura.addActionListener(new ActionListener(){
+        this.bt_enviarFactura.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -426,7 +420,7 @@ extends JInternalFrame {
         this.txt_productoCodigo.setEditable(false);
         this.txt_productoCodigo.setFont(new Font("Tahoma", 0, 14));
         this.txt_productoCodigo.setHorizontalAlignment(4);
-        this.txt_productoCodigo.addKeyListener(new KeyAdapter(){
+        this.txt_productoCodigo.addKeyListener(new KeyAdapter() {
 
             @Override
             public void keyPressed(KeyEvent evt) {
@@ -436,7 +430,7 @@ extends JInternalFrame {
         this.txt_productoNomenclador.setEditable(false);
         this.txt_productoNomenclador.setFont(new Font("Tahoma", 0, 14));
         this.txt_productoNomenclador.setHorizontalAlignment(4);
-        this.txt_productoNomenclador.addKeyListener(new KeyAdapter(){
+        this.txt_productoNomenclador.addKeyListener(new KeyAdapter() {
 
             @Override
             public void keyPressed(KeyEvent evt) {
@@ -450,7 +444,7 @@ extends JInternalFrame {
         this.bt_help_consultarComprobanteAfip.setFont(new Font("Tahoma", 0, 14));
         this.bt_help_consultarComprobanteAfip.setIcon(new ImageIcon(this.getClass().getResource("/Proyecto/imagenes/signo de pregunta mini.jpg")));
         this.bt_help_consultarComprobanteAfip.setToolTipText("Consultar En Afip Comprobante Guardado");
-        this.bt_help_consultarComprobanteAfip.addActionListener(new ActionListener(){
+        this.bt_help_consultarComprobanteAfip.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -524,8 +518,9 @@ extends JInternalFrame {
                     this.lbl_error.setText("No se encuentran Detalle Imputaciones");
                 }
             }
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
+            LoggerBitacora.getInstance(FIFacturar.class).logueadorMainero.log("un Mensaje", Priority.WARN,
+                    "No se encuentra el Comprobante", ex);
             this.limpiarPantalla();
             this.lbl_error.setText("No se encuentra el Comprobante");
         }
@@ -550,7 +545,7 @@ extends JInternalFrame {
 
     private void txt_comproNumFocusLost(FocusEvent evt) {
         this.facturaProcesa();
-    }   
+    }
 
     private void txt_productoCodigoKeyPressed(KeyEvent evt) {
         if (this.txt_productoCodigo.getText().length() > 0 && this.txt_productoNomenclador.getText().length() > 0) {
@@ -646,4 +641,3 @@ extends JInternalFrame {
     }
 
 }
-

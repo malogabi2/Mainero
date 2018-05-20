@@ -19,6 +19,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.log4j.Priority;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -26,6 +27,7 @@ import org.dom4j.io.SAXReader;
 import org.dom4j.tree.DefaultElement;
 import org.dom4j.tree.DefaultText;
 import utiles.MensajeError;
+import utiles.logger.LoggerBitacora;
 
 public class LectorRespuesta {
     private String[] camposRespuesta;
@@ -50,6 +52,9 @@ public class LectorRespuesta {
             doc = new SAXReader(false).read((Reader)tokenReader);
         }
         catch (DocumentException ex) {
+            LoggerBitacora.getInstance(LectorRespuesta.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error al el leer el parametros de respuesta: " + respuesta, ex);
+            
             Logger.getLogger(LectorRespuesta.class.getName()).log(Level.SEVERE, null, (Throwable)ex);
         }
         Element el = doc.getRootElement();

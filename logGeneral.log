@@ -1,0 +1,5 @@
+14:19:46,299 FATAL MaineroFacturero:? - fallo en cargar el logueador
+java.io.IOException: hola
+	at Proyecto.mainerofacturero.MaineroFacturero.configLogger(MaineroFacturero.java:40)
+	at Proyecto.mainerofacturero.MaineroFacturero.main(MaineroFacturero.java:22)
+14:25:42,367 FATAL MaineroFacturero:? - usuario incorrecto, usuariosda psw: asd

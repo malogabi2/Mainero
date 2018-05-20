@@ -3,24 +3,41 @@
  */
 package Proyecto.GestorDB;
 
-import Proyecto.GestorDB.Conectar;
 import Proyecto.modelo.Configuracion;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.log4j.Priority;
+import utiles.logger.LoggerBitacora;
 
-public abstract class GestorDB {   
+public abstract class GestorDB {
+
     private static Configuracion configu;
     private static Conectar conectar;
-    static {
-        conectar = new Conectar();       
-    }
-    public GestorDB(Configuracion config) {        
-        this.configu = config;
-         try {
-            conectar.conectarAccess(configu.getNombreODBC(), configu.getUsuarioODBC(), configu.getClaveODBC());
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(GestorDB.class.getName()).log(Level.SEVERE, null, ex);
+
+    public GestorDB(Configuracion config) {
+        if (conectar == null) {
+            conectar = new Conectar();
+            this.configu = config;
+            try {
+                conectar.conectarAccess(configu.getNombreODBC(), configu.getUsuarioODBC(), configu.getClaveODBC());
+            } catch (ClassNotFoundException | SQLException ex) {
+                LoggerBitacora.getInstance(GestorDBFE_Electronica.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                    "Problema al conectar con la bade de Datos " + configu.getNombreODBC() + " " + configu.getUsuarioODBC()
+                        + " " + configu.getClaveODBC(), ex);
+                Logger.getLogger(GestorDB.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else if (!conectar.isActivaLaConexion()) {
+            this.configu = config;
+            try {
+                conectar.conectarAccess(configu.getNombreODBC(), configu.getUsuarioODBC(), configu.getClaveODBC());
+            } catch (ClassNotFoundException | SQLException ex) {
+                LoggerBitacora.getInstance(GestorDBFE_Electronica.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                    "Problema al conectar con la bade de Datos " + configu.getNombreODBC() + " " + configu.getUsuarioODBC()
+                        + " " + configu.getClaveODBC(), ex);
+                Logger.getLogger(GestorDB.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
@@ -47,10 +64,11 @@ public abstract class GestorDB {
     public void espera(int segundos) {
         try {
             Thread.sleep(segundos * 1000);
-        }
-        catch (InterruptedException ex) {
+        } catch (InterruptedException ex) {
+            LoggerBitacora.getInstance(GestorDB.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                    "Error al dormir por " + segundos, ex);
+            
             Logger.getLogger(GestorDB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
-

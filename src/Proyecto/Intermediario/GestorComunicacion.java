@@ -20,9 +20,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.log4j.Priority;
 import org.dom4j.DocumentException;
 import todojuntowsawfe.Main;
 import utiles.MensajeError;
+import utiles.logger.LoggerBitacora;
 import wfewfbe.LectorFactura.LectorRespuesta;
 import wsa.coneccion.Wsaa;
 
@@ -112,6 +114,8 @@ public class GestorComunicacion {
             return tokaux;
         }
         catch (FileNotFoundException ex) {
+            LoggerBitacora.getInstance(GestorComunicacion.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error a Buscar Llaves", ex);
             Logger.getLogger(GestorComunicacion.class.getName()).log(Level.SEVERE, null, ex);
             DError ed = new DError(null, false);
             ed.setMensajeUsuario("Error a Buscar Llaves 1");
@@ -120,6 +124,8 @@ public class GestorComunicacion {
             return tokaux;
         }
         catch (IOException ex) {
+             LoggerBitacora.getInstance(GestorComunicacion.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error a Buscar Llaves", ex);
             Logger.getLogger(GestorComunicacion.class.getName()).log(Level.SEVERE, null, ex);
             DError ed = new DError(null, false);
             ed.setMensajeUsuario("Error a Buscar Llaves 1");
@@ -128,6 +134,8 @@ public class GestorComunicacion {
             return tokaux;
         }
         catch (DocumentException ex) {
+             LoggerBitacora.getInstance(GestorComunicacion.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error a Buscar Llaves", ex);
             Logger.getLogger(GestorComunicacion.class.getName()).log(Level.SEVERE, null, (Throwable)ex);
             DError ed = new DError(null, false);
             ed.setMensajeUsuario("Error a Buscar Llaves 1");
@@ -136,6 +144,8 @@ public class GestorComunicacion {
             return tokaux;
         }
         catch (Exception ex) {
+             LoggerBitacora.getInstance(GestorComunicacion.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error a Buscar Llaves", ex);
             Logger.getLogger(GestorComunicacion.class.getName()).log(Level.SEVERE, null, ex);
             DError ed = new DError(null, false);
             ed.setMensajeUsuario("Error a Buscar Llaves 1");

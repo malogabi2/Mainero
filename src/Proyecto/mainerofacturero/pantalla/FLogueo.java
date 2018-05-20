@@ -4,17 +4,12 @@
 package Proyecto.mainerofacturero.pantalla;
 
 import Proyecto.GestorPantallas.GestorLogueo;
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.LayoutManager;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URL;
 import javax.swing.GroupLayout;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,6 +17,8 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
+import org.apache.log4j.Priority;
+import utiles.logger.LoggerBitacora;
 
 public class FLogueo
 extends JFrame {
@@ -92,7 +89,11 @@ extends JFrame {
             this.dispose();
         } else {
             this.lbl_mensaje.setText("Usuario o Clave Incorrectos");
-        }
+            LoggerBitacora.getInstance(FLogueo.class).
+                    logueadorMainero.log("un Mensaje", Priority.WARN, 
+                    "usuario incorrecto, usuario: " + this.txt_usuario.getText() + " psw: " 
+                    + new String(this.txt_pass.getPassword()), null);
+        }      
     }
 
 }

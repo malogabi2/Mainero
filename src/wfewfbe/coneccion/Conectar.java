@@ -8,6 +8,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.log4j.Priority;
+import utiles.logger.LoggerBitacora;
 
 public class Conectar {
     private URLConnection cabeceraConeccion(String soapAction, String server) {
@@ -26,6 +28,8 @@ public class Conectar {
             return connection;
         }
         catch (Exception ex) {
+             LoggerBitacora.getInstance(Conectar.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error al conectar con el servicio: " + server, ex);
             Logger.getLogger(Conectar.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }

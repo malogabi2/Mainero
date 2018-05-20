@@ -6,7 +6,6 @@
  */
 package Proyecto.GestorArchivos;
 
-import Proyecto.GestorArchivos.GestorAConfiguracion;
 import Proyecto.modelo.TokenSign;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -15,11 +14,11 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.Writer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.log4j.Layout;
+import org.apache.log4j.Priority;
+import utiles.logger.LoggerBitacora;
 
 public class GestorATokenSign {
     String archivo = "token.txt";
@@ -51,6 +50,10 @@ public class GestorATokenSign {
             bw.close();
         }
         catch (IOException ex) {
+            LoggerBitacora.getInstance(GestorATokenSign.class). 
+                    logueadorMainero.log("un Mensaje", Priority.ERROR, 
+                    "Error al guardar token: " + this.archivo, ex);
+            
             Logger.getLogger(GestorAConfiguracion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -105,6 +108,9 @@ public class GestorATokenSign {
             return new TokenSign[]{tok1, tok2};
         }
         catch (IOException ex2) {
+             LoggerBitacora.getInstance(GestorATokenSign.class). 
+                    logueadorMainero.log("un Mensaje", Priority.ERROR, 
+                    "Error al traer token: " + this.archivo, ex2);
             Logger.getLogger(GestorAConfiguracion.class.getName()).log(Level.SEVERE, null, ex2);
             return arrtokenSign;
         }       

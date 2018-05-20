@@ -25,6 +25,8 @@ import java.util.logging.Logger;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import org.apache.log4j.Priority;
+import utiles.logger.LoggerBitacora;
 
 public class GestorFIFacturar {
     Configuracion conf;
@@ -208,10 +210,14 @@ public class GestorFIFacturar {
                         return Long.valueOf(idWSBFE);
                     }
                 } catch (InterruptedException ex) {
+                    LoggerBitacora.getInstance(GestorFIFacturar.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error al buscar id de bonos fiscales", ex);
                     Logger.getLogger(GestorFIFacturar.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }            
         } catch (IOException ex) {
+            LoggerBitacora.getInstance(GestorFIFacturar.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error al buscar id de bonos fiscales", ex);
             Logger.getLogger(GestorFIFacturar.class.getName()).log(Level.SEVERE, null, ex);
         }
         return 0;
@@ -221,6 +227,8 @@ public class GestorFIFacturar {
         try {
             GestorAConfiguracion.guardarIdWSBFE(id);
         } catch (IOException ex) {
+            LoggerBitacora.getInstance(GestorFIFacturar.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error al guardar id de bonos fiscales", ex);
             Logger.getLogger(GestorFIFacturar.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

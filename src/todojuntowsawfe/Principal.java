@@ -11,22 +11,20 @@ import Proyecto.modelo.Configuracion;
 import Proyecto.modelo.Factura;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import org.apache.log4j.Priority;
 import org.dom4j.DocumentException;
 import pantalla.interfaz.Prueba;
-import todojuntowsawfe.Entrada;
-import todojuntowsawfe.GestorErrores;
 import utiles.MensajeError;
+import utiles.logger.LoggerBitacora;
 import wfewfbe.LectorFactura.LectorEntradaFactura;
 import wfewfbe.LectorFactura.LectorEntradaFacturaBFE;
 import wfewfbe.LectorFactura.LectorEntradaFacturaFE;
 import wfewfbe.LectorFactura.LectorRespuesta;
 import wfewfbe.coneccion.Ejecutor;
-import wfewfbe.metodo.wfev1.Mensajes;
 import wfewfbe.pantalla.gestor.GestorPrueba;
 import wsa.coneccion.Wsaa;
 
@@ -65,7 +63,10 @@ extends Thread {
             this.wsfe(parametros);
         }
         catch (Exception ex) {
+            LoggerBitacora.getInstance(Principal.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error al procesar datos para facturar archivo: " + parametros.getArchivoFactura(), ex);
             ge.escribir(ex.toString());
+            
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
             this.cerrar();
         }
@@ -73,6 +74,8 @@ extends Thread {
             ge.cerrarArchivo();
         }
         catch (IOException ex) {
+            LoggerBitacora.getInstance(Principal.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error al cerrar el archivo para facturar archivo: " + parametros.getArchivoFactura(), ex);
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -84,6 +87,9 @@ extends Thread {
 
     private void esbribirResultado(String resultado, Entrada parametros) {
         Date dt = new Date();
+        LoggerBitacora.getInstance(Principal.class).logueadorMainero.log("un Mensaje", Priority.INFO,
+                                dt + " armando pantalla con repuesta... Principal.escribitResultado()" , null);
+        
         System.out.println(dt + " armando pantalla con repuesta... Principal.escribitResultado()");
         this.pantalla.pruebaMensaje(resultado, parametros.getMensaje().getMensaje(), parametros.getArchivoRespuesta(), parametros.getMensaje().esConsulta(), parametros.getNombreServicio());
         this.pantalla.setVisible(true);
@@ -136,21 +142,32 @@ extends Thread {
             this.wsfa(entra.getEsPantalla(), entra.getArchivoConfiguracion(), entra.getArchivoRespuesta(), servicio);
         }
         catch (FileNotFoundException ex) {
+            LoggerBitacora.getInstance(Principal.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error al el leer el achivo de error: " + entra.getArchivoError(), ex);
             ge.escribir(ex.toString());
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
             this.cerrar();
         }
         catch (IOException ex) {
+            LoggerBitacora.getInstance(Principal.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error al el leer el achivo de error: " + entra.getArchivoError(), ex);
+            
             ge.escribir(ex.toString());
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
             this.cerrar();
         }
         catch (DocumentException ex) {
+            LoggerBitacora.getInstance(Principal.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error al el leer el achivo de error: " + entra.getArchivoError(), ex);
+            
             ge.escribir(ex.toString());
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, (Throwable)ex);
             this.cerrar();
         }
         catch (Exception ex) {
+            LoggerBitacora.getInstance(Principal.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error al el leer el achivo de error: " + entra.getArchivoError(), ex);
+            
             ge.escribir(ex.toString());
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
             this.cerrar();
@@ -159,6 +176,9 @@ extends Thread {
             ge.cerrarArchivo();
         }
         catch (IOException ex) {
+            LoggerBitacora.getInstance(Principal.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error al el leer el achivo de error: " + entra.getArchivoError(), ex);
+            
             ge.escribir(ex.toString());
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
             this.cerrar();

@@ -6,21 +6,21 @@
  */
 package wfewfbe.pantalla.gestor;
 
-import java.awt.Frame;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.OutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import org.apache.log4j.Layout;
+import org.apache.log4j.Priority;
 import todojuntowsawfe.Salida;
 import todojuntowsawfe.SalidaBFE;
 import todojuntowsawfe.SalidaFE;
 import utiles.MensajeError;
+import utiles.logger.LoggerBitacora;
 import wfewfbe.LectorFactura.LectorRespuesta;
 import wfewfbe.pantalla.interfaz.DError;
 
@@ -48,7 +48,9 @@ public class GestorPrueba {
             this.err.addMensajeError("" + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds() + " Archivos escritos .. GestorPrueba.escribir()");
             return true;
         }
-        catch (Exception ex) {
+        catch (IOException ex) {
+            LoggerBitacora.getInstance(GestorPrueba.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error al escribir respuesta archivo: " + archivo, ex);
             Logger.getLogger(GestorPrueba.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }

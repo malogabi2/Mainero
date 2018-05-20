@@ -17,6 +17,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import org.apache.log4j.Priority;
+import utiles.logger.LoggerBitacora;
 
 public class GestorFIFacturaras {
     Configuracion config;
@@ -36,9 +38,13 @@ public class GestorFIFacturaras {
             }            
         }
         catch (ClassNotFoundException ex) {
+            LoggerBitacora.getInstance(GestorFIFacturaras.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error al buscar Facturas", ex);
             Logger.getLogger(GestorFIFacturaras.class.getName()).log(Level.SEVERE, null, ex);
         }
         catch (SQLException ex) {
+            LoggerBitacora.getInstance(GestorFIFacturaras.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error al buscar Facturas", ex);
             Logger.getLogger(GestorFIFacturaras.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

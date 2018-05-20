@@ -14,6 +14,8 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import org.apache.log4j.Layout;
+import org.apache.log4j.Priority;
+import utiles.logger.LoggerBitacora;
 
 public class GestorErrores {
     Writer archivoErrores;
@@ -31,6 +33,8 @@ public class GestorErrores {
             return true;
         }
         catch (Exception exception) {
+            LoggerBitacora.getInstance(GestorErrores.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error al escribir", exception);
             return false;
         }
     }

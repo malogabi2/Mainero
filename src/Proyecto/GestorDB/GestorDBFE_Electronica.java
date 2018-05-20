@@ -15,11 +15,14 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import org.apache.log4j.Priority;
 import utiles.MensajeError;
+import utiles.logger.LoggerBitacora;
 
 public class GestorDBFE_Electronica extends GestorDB {
 
     private int intentosDeGuardarCAE = 0;
+
     public GestorDBFE_Electronica(Configuracion cong) throws ClassNotFoundException, SQLException {
         super(cong);
     }
@@ -27,6 +30,8 @@ public class GestorDBFE_Electronica extends GestorDB {
     private Producto[] buscaProducto(Factura fac) {
         ArrayList<Producto> detpro = new ArrayList<>();
         String con = "select ma_codigo, ma_nomenclatura from maquinas_vta where ma_codigo=" + fac.getProducto();
+        LoggerBitacora.getInstance(GestorDBFE_Electronica.class).logueadorMainero.log("un Mensaje", Priority.INFO,
+                "Consulta : " + con, null);
         System.out.println(con);
         ResultSet rs;
         Conectar conectar = this.getConectar();
@@ -42,9 +47,11 @@ public class GestorDBFE_Electronica extends GestorDB {
                     detpro.add(pro);
                 }
             } catch (SQLException ex) {
+                LoggerBitacora.getInstance(GestorDBFE_Electronica.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error al buscar producto", ex);
                 Logger.getLogger(GestorDBFE_Electronica.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
-               /* if (conectar.isActivaLaConexion()) {
+                /* if (conectar.isActivaLaConexion()) {
                     conectar.cerrarConexion();
                 }*/
             }
@@ -56,6 +63,8 @@ public class GestorDBFE_Electronica extends GestorDB {
 
     private DetalleFactura[] buscaDetalles(Factura fac) {
         String con = "select ft_electas.ftt_iva, ft_electas.ftt_rg3337, ft_electas.ftt_brutos,ft_electas.ftt_interno from ft_electas where  ft_electas.ftt_tipo=" + fac.getTipo_comprobante() + " and ft_electas.ftt_boca=" + fac.getSuc_comprobante() + " and ft_electas.ftt_comprobante=" + fac.getNum_nombrante();
+        LoggerBitacora.getInstance(GestorDBFE_Electronica.class).logueadorMainero.log("un Mensaje", Priority.INFO,
+                "Consulta : " + con, null);
         System.out.println(con);
         ArrayList<DetalleFactura> detfac = new ArrayList<DetalleFactura>();
         Conectar conectar = this.getConectar();
@@ -75,9 +84,11 @@ public class GestorDBFE_Electronica extends GestorDB {
                 }
 
             } catch (SQLException ex) {
+                LoggerBitacora.getInstance(GestorDBFE_Electronica.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error al buscar detalle factura", ex);
                 Logger.getLogger(GestorDBFE_Electronica.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
-             /*   if (conectar.isActivaLaConexion()) {
+                /*   if (conectar.isActivaLaConexion()) {
                     conectar.cerrarConexion();
                 }*/
             }
@@ -103,6 +114,8 @@ public class GestorDBFE_Electronica extends GestorDB {
         int sucursalCompro = Integer.valueOf(String.valueOf(parametros[1]));
         int tipoCompro = Integer.valueOf(String.valueOf(parametros[2]));
         String con = "select ft_electronica.fte_tipo,ft_electronica.fte_boca,ft_electronica.fte_comprobante, ft_electronica.fte_razon_social,ft_electronica.fte_fecha,ft_electronica.fte_cuit,ft_electronica.fte_responsable,ft_electronica.fte_gravado,ft_electronica.fte_1, ft_electronica.fte_iva, ft_electronica.fte_2, ft_electronica.fte_exento, ft_electronica.fte_rg3337,ft_electronica.fte_tucuman,ft_electronica.fte_3,ft_electronica.fte_4, ft_electronica.fte_total, ft_electronica.fte_tipo_cont,ft_electronica.fte_cae,ft_electronica.fte_fecha_cae from ft_electronica  where ft_electronica.fte_tipo=" + tipoCompro + " and ft_electronica.fte_boca=" + sucursalCompro + " and ft_electronica.fte_comprobante=" + numeroCompro + " order by ft_electronica.fte_tipo desc,ft_electronica.fte_boca desc,ft_electronica.fte_comprobante ";
+        LoggerBitacora.getInstance(GestorDBFE_Electronica.class).logueadorMainero.log("un Mensaje", Priority.INFO,
+                "Consulta : " + con, null);
         System.out.println(con);
         ArrayList<Factura> lfac = new ArrayList<Factura>();
         Conectar conectar = this.getConectar();
@@ -144,9 +157,11 @@ public class GestorDBFE_Electronica extends GestorDB {
                     lfac.add(fac);
                 }
             } catch (SQLException ex) {
+                LoggerBitacora.getInstance(GestorDBFE_Electronica.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error al traer datos", ex);
                 Logger.getLogger(GestorDBFE_Electronica.class.getName()).log(Level.SEVERE, null, ex);
             }
-           /* finally {
+            /* finally {
                 if(conectar.isActivaLaConexion()) conectar.cerrarConexiones();
             }*/
         }
@@ -163,17 +178,18 @@ public class GestorDBFE_Electronica extends GestorDB {
     public boolean existElCae(String tipoCompro, String sucursal, String numeroComprobante, String cae) {
         String con = "select * from ft_electronica where ft_electronica.fte_tipo=" + tipoCompro + " and ft_electronica.fte_boca="
                 + sucursal + " and ft_electronica.fte_comprobante=" + numeroComprobante + " and ft_electronica.fte_cae=" + cae;
+        LoggerBitacora.getInstance(GestorDBFE_Electronica.class).logueadorMainero.log("un Mensaje", Priority.INFO,
+                "Consulta Busco Cae: " + con, null);
         System.out.println("busco Cae: " + con);
         Conectar conectar = this.getConectar();
-        boolean result=false;
-        if(conectar.isActivaLaConexion()) {
+        boolean result = false;
+        if (conectar.isActivaLaConexion()) {
             try {
                 ResultSet rs = conectar.Select(con);
                 result = rs.next();
-              /*  if(conectar.isActivaLaConexion()) {
-                    conectar.cerrarConexion();
-                } */
             } catch (SQLException ex) {
+                LoggerBitacora.getInstance(GestorDBFE_Electronica.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error al ver si existe el cae", ex);
                 Logger.getLogger(GestorDBFE_Electronica.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -184,45 +200,50 @@ public class GestorDBFE_Electronica extends GestorDB {
             String sucursal, String numeroCompro, boolean esFiscal, MensajeError err) {
         if (!valores.get(capmos.indexOf("Reproceso")).equals("S") && valores.get(capmos.indexOf("Resultado")).equals("A")) {
             try {
-                String cae = !esFiscal? valores.get(capmos.indexOf("CAE")) :valores.get(capmos.indexOf("Cae")) ;
-                
-                String con = !esFiscal ? "update ft_electronica set ft_electronica.fte_cae = '" + cae + "' " 
-                        + ", ft_electronica.fte_fecha_cae='" + valores.get(capmos.indexOf("CAEFchVto")) 
+                String cae = !esFiscal ? valores.get(capmos.indexOf("CAE")) : valores.get(capmos.indexOf("Cae"));
+
+                String con = !esFiscal ? "update ft_electronica set ft_electronica.fte_cae = '" + cae + "' "
+                        + ", ft_electronica.fte_fecha_cae='" + valores.get(capmos.indexOf("CAEFchVto"))
                         + "' where ft_electronica.fte_tipo=" + tipoCompro + " and ft_electronica.fte_boca="
-                        + sucursal + " and ft_electronica.fte_comprobante=" + numeroCompro : 
-                        
-                        "update ft_electronica set ft_electronica.fte_cae = '" + valores.get(capmos.indexOf("Cae")) + "' " 
-                        + ", ft_electronica.fte_fecha_cae='" + valores.get(capmos.indexOf("Fch_venc_Cae")) 
-                        + "' where ft_electronica.fte_tipo=" + tipoCompro + " and ft_electronica.fte_boca=" 
+                        + sucursal + " and ft_electronica.fte_comprobante=" + numeroCompro
+                        : "update ft_electronica set ft_electronica.fte_cae = '" + valores.get(capmos.indexOf("Cae")) + "' "
+                        + ", ft_electronica.fte_fecha_cae='" + valores.get(capmos.indexOf("Fch_venc_Cae"))
+                        + "' where ft_electronica.fte_tipo=" + tipoCompro + " and ft_electronica.fte_boca="
                         + sucursal + " and ft_electronica.fte_comprobante=" + numeroCompro;
-                
+
                 System.out.println("updating : " + con);
+                LoggerBitacora.getInstance(GestorDBFE_Electronica.class).logueadorMainero.log("un Mensaje", Priority.INFO,
+                        "Consulta  updating: " + con, null);
                 Conectar conectar = this.getConectar();
-                if(conectar.isActivaLaConexion()){
+                if (conectar.isActivaLaConexion()) {
                     conectar.ejecutaConsulta(con);
                     this.espera(1);
-                  //  conectar.cerrarConexion();
+                    //  conectar.cerrarConexion();
                     intentosDeGuardarCAE++;
-                    if(!this.existElCae(tipoCompro, sucursal, numeroCompro, cae)) {
-                        if(intentosDeGuardarCAE < 6) {
+                    if (!this.existElCae(tipoCompro, sucursal, numeroCompro, cae)) {
+                        if (intentosDeGuardarCAE < 6) {
+                            LoggerBitacora.getInstance(GestorDBFE_Electronica.class).logueadorMainero.log("un Mensaje", Priority.WARN,
+                                    "Fallo de encontrar el CAE, intento: " + (intentosDeGuardarCAE), null);
                             System.out.println("Fallo de encontrar el CAE, intento: " + (intentosDeGuardarCAE));
                             guardarCae(capmos, valores, tipoCompro, sucursal, numeroCompro, esFiscal, err);
-                        }
-                        else {
+                        } else {
+                            LoggerBitacora.getInstance(GestorDBFE_Electronica.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                                    "Demasiados intentos, CAE no se ha guardado correctamente, llame al administrador", null);
                             System.out.println("Demasiados intentos, CAE no se ha guardado correctamente, llame al administrador");
                             JOptionPane.showMessageDialog(null, "Demasiados intentos, CAE no se ha guardado correctamente, llame al administrador");
                         }
-                    }else {
+                    } else {
+                        LoggerBitacora.getInstance(GestorDBFE_Electronica.class).logueadorMainero.log("un Mensaje", Priority.INFO,
+                                "CAE guardo correctamente, despues de " + (intentosDeGuardarCAE), null);
                         System.out.println("CAE guardo correctamente, despues de " + (intentosDeGuardarCAE));
                         JOptionPane.showMessageDialog(null, "CAE guardo correctamente, despues de " + (intentosDeGuardarCAE) + " intentos");
                     }
-                }                
+                }
             } catch (SQLException ex) {
+                LoggerBitacora.getInstance(GestorDBFE_Electronica.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        " Error a guardar CAE, " + ex.toString() + " - " + ex.getMessage(), ex);
                 System.out.println("Error a guardar CAE, " + ex.toString() + " - " + ex.getMessage());
-                DError ed = new DError(null, false);
-                ed.setMensajeUsuario("Error al guardar CAE");
-                ed.setMensajeAdmin(ex.toString() + " - " + ex.getMessage());
-                ed.setVisible(true);
+                guardarCae(capmos, valores, tipoCompro, sucursal, numeroCompro, esFiscal, err);
             }
         } else {
             err.addMensajeError("Comprobante invalido para ser guardado Reproceso: " + capmos.indexOf("Reproceso")
@@ -234,6 +255,10 @@ public class GestorDBFE_Electronica extends GestorDB {
                     + valores.get(capmos.indexOf("Resultado")));
 
             ed.setVisible(true);
+            LoggerBitacora.getInstance(GestorDBFE_Electronica.class).logueadorMainero.log("un Mensaje", Priority.WARN,
+                    "Error al guardar CAE, Comprobante invalido para ser guardado "
+                    + "Reproceso: " + capmos.indexOf("Reproceso") + " Resultado: "
+                    + valores.get(capmos.indexOf("Resultado")), null);
         }
     }
 
@@ -248,6 +273,6 @@ public class GestorDBFE_Electronica extends GestorDB {
     }
 
     public void ponerEn0Intentos() {
-        intentosDeGuardarCAE=0;
+        intentosDeGuardarCAE = 0;
     }
 }

@@ -12,12 +12,13 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.log4j.Priority;
 import pantalla.interfaz.FEspera;
 import todojuntowsawfe.Entrada;
 import todojuntowsawfe.GestorErrores;
 import todojuntowsawfe.Principal;
 import utiles.MensajeError;
-import wfewfbe.metodo.wfev1.Mensajes;
+import utiles.logger.LoggerBitacora;
 
 public class GestorEspera
 extends Thread
@@ -83,10 +84,14 @@ implements Observer {
                 ger.cerrarArchivo();
             }
             catch (IOException ex) {
+                LoggerBitacora.getInstance(GestorEspera.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error al cerrar achivo", ex);
                 Logger.getLogger(GestorEspera.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         catch (FileNotFoundException ex) {
+            LoggerBitacora.getInstance(GestorEspera.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error al cerrar achivo", ex);
             Logger.getLogger(GestorEspera.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -97,11 +102,15 @@ implements Observer {
             this.entrada.setearParametros(parametros);
         }
         catch (Exception ex) {
+            LoggerBitacora.getInstance(GestorEspera.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error al setear parametros", ex);
             Logger.getLogger(GestorEspera.class.getName()).log(Level.SEVERE, null, ex);
             try {
                 ge = new GestorErrores("Error.txt");
             }
             catch (FileNotFoundException ex1) {
+                LoggerBitacora.getInstance(GestorEspera.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error al setear parametros", ex1);
                 Logger.getLogger(GestorEspera.class.getName()).log(Level.SEVERE, null, ex1);
             }
             ge.escribir("Error En los Parametros");

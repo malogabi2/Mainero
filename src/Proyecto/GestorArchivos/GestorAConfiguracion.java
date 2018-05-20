@@ -19,14 +19,12 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintStream;
-import java.io.Writer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import org.apache.log4j.Layout;
-import utiles.Bitacora;
-import utiles.LoggerBitacora;
+import org.apache.log4j.Priority;
+import utiles.logger.LoggerBitacora;
+
 
 public class GestorAConfiguracion {
     public GestorAConfiguracion(Configuracion configuracion) {
@@ -77,14 +75,19 @@ public class GestorAConfiguracion {
             bw.close();
         }
         catch (IOException ex) {
+            LoggerBitacora.getInstance(GestorAConfiguracion.class).
+                    logueadorMainero.log("un Mensaje", Priority.ERROR, 
+                    "Error al guardar configuracion", ex); 
             Logger.getLogger(GestorAConfiguracion.class.getName()).log(Level.SEVERE, null, ex);
             this.FileCopy(config.getArchivoConfigEste() + "aux", config.getArchivoConfigEste());
         }
     }
 
     public void FileCopy(String sourceFile, String destinationFile) {
-        LoggerBitacora.log("Desde: " + sourceFile, Level.INFO);
-        LoggerBitacora.log("Hacia: " + destinationFile, Level.INFO);
+        LoggerBitacora.getInstance(GestorAConfiguracion.class).
+                    logueadorMainero.log("un Mensaje", Priority.INFO, 
+                    "Desde: " + sourceFile + "*** Hacia: " + destinationFile, null);
+        
         System.out.println("Desde: " + sourceFile);
         System.out.println("Hacia: " + destinationFile);
         try {
@@ -100,7 +103,9 @@ public class GestorAConfiguracion {
             out.close();
         }
         catch (IOException e) {
-            System.err.println("Hubo un error de entrada/salida!!!");
+             LoggerBitacora.getInstance(GestorAConfiguracion.class).
+                    logueadorMainero.log("un Mensaje", Priority.ERROR, 
+                    "Hubo un error de entrada/salida!!!", e);            
         }
     }
 
@@ -112,6 +117,9 @@ public class GestorAConfiguracion {
                 continue;
             }
             catch (IOException ex) {
+                 LoggerBitacora.getInstance(GestorAConfiguracion.class).
+                    logueadorMainero.log("un Mensaje", Priority.ERROR, 
+                    "Error al guardar Item", ex);
                 Logger.getLogger(GestorAConfiguracion.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -219,15 +227,24 @@ public class GestorAConfiguracion {
                 fr.close();
                 return configEntrada;
             } catch (IOException ex) {
+                 LoggerBitacora.getInstance(GestorAConfiguracion.class).
+                    logueadorMainero.log("un Mensaje", Priority.ERROR, 
+                    "Error al traer configuracion", ex);
                 Logger.getLogger(GestorAConfiguracion.class.getName()).log(Level.SEVERE, null, ex);
                 return configEntrada;
             }
         } catch (IOException ex) {
+             LoggerBitacora.getInstance(GestorAConfiguracion.class).
+                    logueadorMainero.log("un Mensaje", Priority.ERROR, 
+                    "Error al traer configuracion", ex);
             Logger.getLogger(GestorAConfiguracion.class.getName()).log(Level.SEVERE, null, ex);
             try {
                 fr.close();
                 return configEntrada;
             } catch (IOException ex1) {
+                 LoggerBitacora.getInstance(GestorAConfiguracion.class).
+                    logueadorMainero.log("un Mensaje", Priority.ERROR, 
+                    "Error al traer configuracion", ex1);
                 Logger.getLogger(GestorAConfiguracion.class.getName()).log(Level.SEVERE, null, ex1);
                 return configEntrada;
             }
@@ -236,6 +253,9 @@ public class GestorAConfiguracion {
                 fr.close();
                 return configEntrada;
             } catch (IOException ex2) {
+                 LoggerBitacora.getInstance(GestorAConfiguracion.class).
+                    logueadorMainero.log("un Mensaje", Priority.ERROR, 
+                    "Error al traer configuracion", ex2);
                 Logger.getLogger(GestorAConfiguracion.class.getName()).log(Level.SEVERE, null, ex2);
             }
         }        

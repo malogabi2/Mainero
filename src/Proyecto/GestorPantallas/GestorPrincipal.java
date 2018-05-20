@@ -13,14 +13,11 @@ import Proyecto.mainerofacturero.pantalla.FIFacturar;
 import Proyecto.mainerofacturero.pantalla.FIFacturas;
 import Proyecto.mainerofacturero.pantalla.FIUsuario;
 import Proyecto.modelo.Configuracion;
-import Proyecto.modelo.Permisos;
-import Proyecto.modelo.Sucursal;
-import Proyecto.modelo.TokenSign;
 import Proyecto.modelo.Usuario;
-import java.awt.Component;
 import javax.swing.JDesktopPane;
 
 public class GestorPrincipal {
+
     JDesktopPane escritorio;
     private Configuracion configuracionPrivada;
     private boolean seModificoConfiguracion = false;
@@ -219,4 +216,3 @@ public class GestorPrincipal {
         return this.getConfiguracionPrivada().getUsuarioLogueado().estaPermiso("Consultar - Consultas Varias AFIP");
     }
 }
-

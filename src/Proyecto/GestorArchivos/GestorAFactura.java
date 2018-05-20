@@ -20,6 +20,8 @@ import java.io.Writer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.log4j.Layout;
+import org.apache.log4j.Priority;
+import utiles.logger.LoggerBitacora;
 
 public class GestorAFactura {
     String archivoFactura;
@@ -41,6 +43,9 @@ public class GestorAFactura {
             bw.close();
         }
         catch (IOException ex) {
+             LoggerBitacora.getInstance(GestorAFactura.class).
+                    logueadorMainero.log("un Mensaje", Priority.ERROR, 
+                    "Error al crear archivo facConsulta: " + this.archivoFactura, ex);
             Logger.getLogger(GestorAConfiguracion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -102,6 +107,9 @@ public class GestorAFactura {
             bw.close();
         }
         catch (IOException ex) {
+             LoggerBitacora.getInstance(GestorAFactura.class).
+                    logueadorMainero.log("un Mensaje", Priority.ERROR, 
+                    "Error al crear archivo factura wfe: " + this.archivoFactura, ex);
             Logger.getLogger(GestorAConfiguracion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -184,6 +192,9 @@ public class GestorAFactura {
             }
         }
         catch (IOException ex) {
+             LoggerBitacora.getInstance(GestorAFactura.class).
+                    logueadorMainero.log("un Mensaje", Priority.ERROR, 
+                    "Error al armar tributos: " + this.archivoFactura, ex);
             Logger.getLogger(GestorAFactura.class.getName()).log(Level.SEVERE, null, ex);
         }
         return bw;
@@ -219,6 +230,9 @@ public class GestorAFactura {
             }
         }
         catch (IOException ex) {
+             LoggerBitacora.getInstance(GestorAFactura.class).
+                    logueadorMainero.log("un Mensaje", Priority.ERROR, 
+                    "Error al armar iva: " + this.archivoFactura, ex);
             Logger.getLogger(GestorAFactura.class.getName()).log(Level.SEVERE, null, ex);
         }
         return bw;
@@ -297,6 +311,9 @@ public class GestorAFactura {
             bw.close();
         }
         catch (IOException ex) {
+             LoggerBitacora.getInstance(GestorAFactura.class).
+                    logueadorMainero.log("un Mensaje", Priority.ERROR, 
+                    "Error al crear archivo fac wbfe: " + this.archivoFactura, ex);
             Logger.getLogger(GestorAConfiguracion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

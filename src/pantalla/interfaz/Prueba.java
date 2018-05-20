@@ -4,15 +4,11 @@
 package pantalla.interfaz;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.LayoutManager;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.BorderFactory;
@@ -27,15 +23,15 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.LayoutStyle;
-import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
+import org.apache.log4j.Priority;
 import todojuntowsawfe.ItemsBFE;
 import todojuntowsawfe.Salida;
 import todojuntowsawfe.SalidaBFE;
 import todojuntowsawfe.SalidaFE;
 import utiles.MensajeError;
 import utiles.Util;
+import utiles.logger.LoggerBitacora;
 import wfewfbe.pantalla.gestor.GestorPrueba;
 
 public class Prueba
@@ -139,6 +135,9 @@ extends JFrame {
     public void pruebaMensaje(String repuesta, String pregunta, String archivorespuesta, boolean esConsulta, String servicio) {
         Date dt = new Date();
         System.out.println(dt + " entro a pantalla de muestra... Prueba.pruebaMensaje()");
+        LoggerBitacora.getInstance(Prueba.class).logueadorMainero.log("un Mensaje", Priority.INFO,
+                                "Respuesta: " + repuesta + " Pregunta: " + pregunta , null);
+            
         this.respuestaXML.setText("Respuesta: " + repuesta);
         this.preguntaXML.setText("Pregunta: " + pregunta);
         GestorPrueba gp = new GestorPrueba(this.err);

@@ -18,34 +18,40 @@ package documentacion;
 
 import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
 import java.io.FileInputStream;
-import java.io.InputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
-import java.security.Key;
+import java.rmi.RemoteException;
+import java.security.InvalidAlgorithmParameterException;
 import java.security.KeyStore;
-import java.security.Principal;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
 import java.security.Provider;
 import java.security.Security;
+import java.security.UnrecoverableKeyException;
 import java.security.cert.CertStore;
 import java.security.cert.CertStoreParameters;
-import java.security.cert.Certificate;
+import java.security.cert.CertificateException;
 import java.security.cert.CollectionCertStoreParameters;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import javax.xml.namespace.QName;
 import javax.xml.rpc.ParameterMode;
+import javax.xml.rpc.ServiceException;
 import org.apache.axis.client.Call;
 import org.apache.axis.client.Service;
 import org.apache.axis.encoding.Base64;
 import org.apache.axis.encoding.XMLType;
+import org.apache.log4j.Priority;
 import org.bouncycastle.cms.CMSProcessable;
 import org.bouncycastle.cms.CMSProcessableByteArray;
 import org.bouncycastle.cms.CMSSignedData;
 import org.bouncycastle.cms.CMSSignedDataGenerator;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import utiles.logger.LoggerBitacora;
 
 public class afip_wsaa_client {
     static String invoke_wsaa(byte[] LoginTicketRequest_xml_cms, String endpoint) throws Exception {
@@ -59,8 +65,9 @@ public class afip_wsaa_client {
             call.setReturnType(XMLType.XSD_STRING);
             LoginTicketResponse = (String)call.invoke(new Object[]{Base64.encode((byte[])LoginTicketRequest_xml_cms)});
         }
-        catch (Exception e) {
-            e.printStackTrace();
+        catch (MalformedURLException | RemoteException | ServiceException e) {
+            LoggerBitacora.getInstance(afip_wsaa_client.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error al conectarse con afip_wsaa", e);
         }
         return LoginTicketResponse;
     }
@@ -86,8 +93,9 @@ public class afip_wsaa_client {
             }
             cstore = CertStore.getInstance("Collection", (CertStoreParameters)new CollectionCertStoreParameters(certList), "BC");
         }
-        catch (Exception e) {
-            e.printStackTrace();
+        catch (IOException | InvalidAlgorithmParameterException | KeyStoreException | NoSuchAlgorithmException | NoSuchProviderException | UnrecoverableKeyException | CertificateException e) {
+            LoggerBitacora.getInstance(afip_wsaa_client.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error al encriptar", e);
         }
         String LoginTicketRequest_xml = afip_wsaa_client.create_LoginTicketRequest(SignerDN, dstDN, service, TicketTime);
         try {
@@ -99,7 +107,9 @@ public class afip_wsaa_client {
             asn1_cms = signed.getEncoded();
         }
         catch (Exception e) {
-            e.printStackTrace();
+             LoggerBitacora.getInstance(afip_wsaa_client.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error al encriptar", e);
+            
         }
         return asn1_cms;
     }

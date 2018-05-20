@@ -21,6 +21,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import utiles.logger.LoggerBitacora;
 
 public class FPrincipal
 extends JFrame {
@@ -253,6 +254,7 @@ extends JFrame {
     }
 
     public void tomarUsuario(Usuario user) {
+        LoggerBitacora.setNombreUsuarioLogueado(user.getUsuarioNombre());
         this.gestor = new GestorPrincipal(this.escritorio, user);
     }
 

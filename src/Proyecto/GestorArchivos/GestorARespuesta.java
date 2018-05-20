@@ -6,11 +6,12 @@ package Proyecto.GestorArchivos;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.log4j.Priority;
 import utiles.MensajeError;
+import utiles.logger.LoggerBitacora;
 import wfewfbe.LectorFactura.LectorRespuesta;
 
 public class GestorARespuesta {
@@ -40,6 +41,9 @@ public class GestorARespuesta {
             this.camposResul = lr.getValoresResul();
         }
         catch (IOException ex) {
+             LoggerBitacora.getInstance(GestorARespuesta.class).
+                    logueadorMainero.log("un Mensaje", Priority.ERROR, 
+                    "Error al leer respuesta archivo: " + this.archivoRespuesta, ex);
             Logger.getLogger(GestorARespuesta.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

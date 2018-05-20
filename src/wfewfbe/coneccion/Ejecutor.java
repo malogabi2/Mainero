@@ -13,9 +13,10 @@ import java.io.PrintStream;
 import java.io.Reader;
 import java.net.URLConnection;
 import java.util.Date;
+import org.apache.log4j.Priority;
 import todojuntowsawfe.Entrada;
 import utiles.MensajeError;
-import wfewfbe.coneccion.Conectar;
+import utiles.logger.LoggerBitacora;
 import wfewfbe.metodo.wfev1.Mensajes;
 
 public class Ejecutor {
@@ -29,8 +30,13 @@ public class Ejecutor {
         OutputStream out = connection.getOutputStream();
         OutputStreamWriter wout = new OutputStreamWriter(out);
         Date dt = new Date();
+        LoggerBitacora.getInstance(Ejecutor.class).logueadorMainero.log("un Mensaje", Priority.INFO,
+                                " A punto de escribir en Server.. Ejecutor.tomaParametros()", null);
         this.err.addMensajeError("" + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds() + " A punto de escribir en Server.. Ejecutor.tomaParametros()");
         System.out.println(mensaje.mensaje(parametros, mensaje.nombreMensajeXML()));
+        LoggerBitacora.getInstance(Ejecutor.class).logueadorMainero.log("un Mensaje", Priority.INFO,
+                                mensaje.mensaje(parametros, mensaje.nombreMensajeXML()), null);
+        
         wout.write(mensaje.mensaje(parametros, mensaje.nombreMensajeXML()));
         wout.flush();
         dt = new Date();
