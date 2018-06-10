@@ -52,7 +52,7 @@ public abstract class GestorDB {
         return conectar;
     }
 
-    protected final Conectar getConectarErrorGrave() {
+    protected final void reConectarErrorGrave() {
         conectar = new Conectar();
         try {
             conectar.conectarAccess(configu.getNombreODBC(), configu.getUsuarioODBC(), configu.getClaveODBC());
@@ -61,8 +61,7 @@ public abstract class GestorDB {
                     "Problema al conectar con la bade de Datos " + configu.getNombreODBC() + " " + configu.getUsuarioODBC()
                     + " " + configu.getClaveODBC(), ex);
             Logger.getLogger(GestorDB.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return conectar;
+        }        
     }
 
     public Configuracion getConfigu() {

@@ -243,6 +243,7 @@ public class GestorDBFE_Electronica extends GestorDB {
                         " Error a guardar CAE, " + ex.toString() + " - " + ex.getMessage(), ex);
                 System.out.println("Error a guardar CAE, " + ex.toString() + " - " + ex.getMessage());
                 this.espera(2);
+                this.reConectarErrorGrave();
                 guardarCae(capmos, valores, tipoCompro, sucursal, numeroCompro, esFiscal, err);
             }
         } else {
