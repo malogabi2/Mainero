@@ -53,6 +53,7 @@ public abstract class GestorDB {
     }
 
     protected final void reConectarErrorGrave() {
+        conectar.finalizar();
         conectar = new Conectar();
         try {
             conectar.conectarAccess(configu.getNombreODBC(), configu.getUsuarioODBC(), configu.getClaveODBC());

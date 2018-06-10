@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.log4j.Priority;
 import utiles.logger.LoggerBitacora;
 
@@ -231,8 +233,8 @@ public class Conectar {
     }
 
     public ResultSet Select(String select) throws SQLException {
-        LoggerBitacora.getInstance(Conectar.class).logueadorMainero.log("un Mensaje", Priority.INFO,
-                    "Consulta sql: " + select , null);
+   /*     LoggerBitacora.getInstance(Conectar.class).logueadorMainero.log("un Mensaje", Priority.INFO,
+                    "Consulta sql: " + select , null);*/
         
         this.sentencia = this.conexion.createStatement(1005, 1007);
         this.rs = this.sentencia.executeQuery(select);
@@ -297,6 +299,15 @@ public class Conectar {
 
     public Object[][] SelectATabla(String select) throws Exception {
         return this.pasarATabla(this.Select(select));
+    }
+    
+    public void finalizar() {
+        try {
+            this.finalize();
+        } catch (Throwable ex) {
+            LoggerBitacora.getInstance(Conectar.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                    "\"'cerrarConexion()' Error al intentar finalizar \" + e.getMessage()", ex);
+        }
     }
 
     protected void finalize() throws Throwable {
