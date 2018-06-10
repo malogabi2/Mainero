@@ -57,8 +57,8 @@ public class wsaa_test {
             Document tokenDoc = new SAXReader(false).read((Reader) tokenReader);
             String token = tokenDoc.valueOf("/loginTicketResponse/credentials/token");
             String sign = tokenDoc.valueOf("/loginTicketResponse/credentials/sign");
-            LoggerBitacora.getInstance(wsaa_test.class).logueadorMainero.log("un Mensaje", Priority.INFO,
-                    "TOKEN: " + token + " sign: " + sign, null);
+          /*  LoggerBitacora.getInstance(wsaa_test.class).logueadorMainero.log("un Mensaje", Priority.INFO,
+                    "TOKEN: " + token + " sign: " + sign, null);*/
             System.out.println("TOKEN: " + token);
             System.out.println("SIGN: " + sign);
         } catch (DocumentException e) {

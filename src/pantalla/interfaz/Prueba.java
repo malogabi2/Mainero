@@ -135,8 +135,8 @@ extends JFrame {
     public void pruebaMensaje(String repuesta, String pregunta, String archivorespuesta, boolean esConsulta, String servicio) {
         Date dt = new Date();
         System.out.println(dt + " entro a pantalla de muestra... Prueba.pruebaMensaje()");
-        LoggerBitacora.getInstance(Prueba.class).logueadorMainero.log("un Mensaje", Priority.INFO,
-                                "Respuesta: " + repuesta + " Pregunta: " + pregunta , null);
+     /*   LoggerBitacora.getInstance(Prueba.class).logueadorMainero.log("un Mensaje", Priority.INFO,
+                                "Respuesta: " + repuesta + " Pregunta: " + pregunta , null);*/
             
         this.respuestaXML.setText("Respuesta: " + repuesta);
         this.preguntaXML.setText("Pregunta: " + pregunta);

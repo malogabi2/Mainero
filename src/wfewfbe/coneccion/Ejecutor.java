@@ -34,8 +34,8 @@ public class Ejecutor {
                                 " A punto de escribir en Server.. Ejecutor.tomaParametros()", null);
         this.err.addMensajeError("" + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds() + " A punto de escribir en Server.. Ejecutor.tomaParametros()");
         System.out.println(mensaje.mensaje(parametros, mensaje.nombreMensajeXML()));
-        LoggerBitacora.getInstance(Ejecutor.class).logueadorMainero.log("un Mensaje", Priority.INFO,
-                                mensaje.mensaje(parametros, mensaje.nombreMensajeXML()), null);
+     /*   LoggerBitacora.getInstance(Ejecutor.class).logueadorMainero.log("un Mensaje", Priority.INFO,
+                                mensaje.mensaje(parametros, mensaje.nombreMensajeXML()), null);*/
         
         wout.write(mensaje.mensaje(parametros, mensaje.nombreMensajeXML()));
         wout.flush();

@@ -53,7 +53,7 @@ public class LectorRespuesta {
         }
         catch (DocumentException ex) {
             LoggerBitacora.getInstance(LectorRespuesta.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
-                        "Error al el leer el parametros de respuesta: " + respuesta, ex);
+                        "Error al el leer el parametros de respuesta", ex);
             
             Logger.getLogger(LectorRespuesta.class.getName()).log(Level.SEVERE, null, (Throwable)ex);
         }
