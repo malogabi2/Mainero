@@ -242,8 +242,8 @@ public class GestorDBFE_Electronica extends GestorDB {
                 LoggerBitacora.getInstance(GestorDBFE_Electronica.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
                         " Error a guardar CAE, " + ex.toString() + " - " + ex.getMessage(), ex);
                 System.out.println("Error a guardar CAE, " + ex.toString() + " - " + ex.getMessage());
-                this.espera(2);
                 this.reConectarErrorGrave();
+                this.espera(2);                
                 guardarCae(capmos, valores, tipoCompro, sucursal, numeroCompro, esFiscal, err);
             }
         } else {
