@@ -6,17 +6,13 @@
  */
 package Proyecto.GestorArchivos;
 
-import Proyecto.GestorArchivos.GestorAConfiguracion;
-import Proyecto.modelo.DetalleFactura;
 import Proyecto.modelo.Factura;
-import Proyecto.modelo.Producto;
 import Proyecto.modelo.TokenSign;
 import Proyecto.utilerias.Utilerias;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.log4j.Layout;

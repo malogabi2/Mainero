@@ -6,23 +6,16 @@ package Proyecto.mainerofacturero.pantalla;
 import Proyecto.GestorPantallas.GestorFIBuscarWSer;
 import Proyecto.modelo.Configuracion;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.Font;
-import java.awt.LayoutManager;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.net.URL;
 import javax.swing.GroupLayout;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.LayoutStyle;
-import javax.swing.border.Border;
 
 public class FIBuscarWEBSERVICE
 extends JInternalFrame {

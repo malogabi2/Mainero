@@ -30,5 +30,9 @@ public class GestorLogueo {
         prin.tomarUsuario(this.user);
         prin.setVisible(true);
     }
+
+    public void checkearCaePendientes() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
 

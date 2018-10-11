@@ -53,6 +53,8 @@ public class Conectar {
         String url = "jdbc:odbc:" + nombreBD;
         this.conexion = DriverManager.getConnection(url, usuario, clave);
         conexionActiva = true;
+        LoggerBitacora.getInstance(Conectar.class).logueadorMainero.log("un Mensaje", Priority.INFO,
+                "Jconectar dbcOdbcDriver OK", null);
     }
 
     public void conectarPostgres(String maquina, String nombreBD, String usuario, String clave) throws SQLException {

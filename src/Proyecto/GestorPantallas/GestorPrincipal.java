@@ -14,7 +14,13 @@ import Proyecto.mainerofacturero.pantalla.FIFacturas;
 import Proyecto.mainerofacturero.pantalla.FIUsuario;
 import Proyecto.modelo.Configuracion;
 import Proyecto.modelo.Usuario;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDesktopPane;
+import org.apache.log4j.Priority;
+import utiles.logger.GestorDeCheckeoInicial;
+import utiles.logger.LoggerBitacora;
 
 public class GestorPrincipal {
 
@@ -28,6 +34,25 @@ public class GestorPrincipal {
         this.configuracionPrivada.setUsuarioLogueado(usuario);
         this.setConfiguracionPrivada(this.traerConfiguracion(this.configuracionPrivada));
         this.configuracionPrivada.ConectarBasesODBC();
+        this.checkearCaePendiente();
+    }
+    
+    private void checkearCaePendiente() {
+        GestorDeCheckeoInicial gestorBuscadorDeCaePendientes = null;
+        try {
+            gestorBuscadorDeCaePendientes = new GestorDeCheckeoInicial(configuracionPrivada);
+            gestorBuscadorDeCaePendientes.start();
+        }        
+        catch (ClassNotFoundException ex) {
+            LoggerBitacora.getInstance(GestorFIFacturaras.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error al guardar caes pendientes", ex);
+            Logger.getLogger(GestorFIFacturaras.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (SQLException ex) {
+            LoggerBitacora.getInstance(GestorFIFacturaras.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error al guardar caes pendientes", ex);
+            Logger.getLogger(GestorFIFacturaras.class.getName()).log(Level.SEVERE, null, ex);
+        }        
     }
 
     private Configuracion traerConfiguracion(Configuracion config) {

@@ -4,7 +4,6 @@
 package Proyecto.mainerofacturero.pantalla;
 
 import Proyecto.GestorPantallas.GestorFIFacturar;
-import Proyecto.Intermediario.GestorComunicacion;
 import Proyecto.modelo.Configuracion;
 import Proyecto.utilerias.Utilerias;
 import java.awt.Color;

@@ -32,6 +32,7 @@ public class LoggerBitacora {
             file = new RollingFileAppender(new PatternLayout("%d{dd MMM yyyy HH:mm:ss,SSS} %5p %c{1}:%L - %m%n"), 
                     nombreUsuarioLogueado + "LogGeneral.log", true);
             file.setMaxFileSize("100MB");
+            logueadorMainero.setAdditivity(false);
             logueadorMainero.addAppender(file);
         } catch (IOException ex) {
             java.util.logging.Logger.getLogger(LoggerBitacora.class.getName()).log(Level.SEVERE, null, ex);

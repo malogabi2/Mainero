@@ -5,15 +5,11 @@ package Proyecto.mainerofacturero.pantalla;
 
 import Proyecto.GestorPantallas.GestorFIMostrarTokens;
 import Proyecto.modelo.Configuracion;
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.Font;
-import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.JInternalFrame;
@@ -24,7 +20,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.LayoutStyle;
-import javax.swing.border.Border;
 
 public class FITokens
 extends JInternalFrame {
