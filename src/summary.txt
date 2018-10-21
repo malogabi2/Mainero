@@ -21,3 +21,18 @@ Proyecto.GestorArchivos.GestorATokenSign
 
 traerToken()
   Loose catch block
+
+
+java -jar MaineroFacturero.jar wsa ./wsconfiguracion.ini true tokenFE.txt error.txt wsfe
+
+java -jar MaineroFacturero.jar wsa ./wsconfiguracion.ini true tokenBFE.txt error.txt wsbfe
+
+java -jar MaineroFacturero.jar wfe ./wsconfiguracion.ini true UltimoFE.txt error.txt ./paramsFE.txt FECompUltimoAutorizado 20 1
+
+java -jar MaineroFacturero.jar wbfe ./wsconfiguracion.ini true UltimoFE.txt error.txt ./paramsBFE.txt BFEGetLast_CMP 22 1
+
+java -jar MaineroFacturero.jar wfe ./wsconfiguracion.ini true UltimoFE.txt error.txt ./paramsFE.txt FECompConsultar 20 1 47822
+
+java -jar MaineroFacturero.jar wbfe ./wsconfiguracion.ini true UltimoFE.txt error.txt ./paramsBFE.txt BFEGetLast_ID
+
+java -jar MaineroFacturero.jar wbfe ./wsconfiguracion.ini true UltimoFE.txt error.txt ./paramsBFE.txt BFEGetCMP 22 1 10042
