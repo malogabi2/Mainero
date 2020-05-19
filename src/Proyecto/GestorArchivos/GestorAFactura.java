@@ -269,7 +269,7 @@ public class GestorAFactura {
             bw.write(Layout.LINE_SEP);
             bw.write("Impto_liq_rni=0");
             bw.write(Layout.LINE_SEP);
-            bw.write("Imp_op_ex=" + fac.getImporteNoGravado());
+            bw.write("Imp_op_ex=" + fac.getImporteExento());
             bw.write(Layout.LINE_SEP);
             bw.write("Imp_perc=" + fac.getPercep_nac());
             bw.write(Layout.LINE_SEP);
@@ -297,7 +297,12 @@ public class GestorAFactura {
             bw.write(Layout.LINE_SEP);
             bw.write("Pro_umed1=7");
             bw.write(Layout.LINE_SEP);
-            bw.write("Pro_precio_uni1=" + fac.getImporteGrafado());
+            if(fac.getImporteGrafado() != null && !fac.getImporteGrafado().isEmpty()) {
+                bw.write("Pro_precio_uni1=" + fac.getImporteGrafado());
+            }
+            else {
+                bw.write("Pro_precio_uni1=" + fac.getImporteExento());
+            }
             bw.write(Layout.LINE_SEP);
             bw.write("Imp_bonif1=0");
             bw.write(Layout.LINE_SEP);
