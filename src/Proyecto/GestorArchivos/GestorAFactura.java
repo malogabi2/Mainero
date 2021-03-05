@@ -265,7 +265,7 @@ public class GestorAFactura {
             bw.write(Layout.LINE_SEP);
             bw.write("Imp_neto=" + fac.getImporteGrafado());
             bw.write(Layout.LINE_SEP);
-            bw.write("Impto_liq=0");
+            bw.write("Impto_liq=" + fac.getImporteIvaInscripto());
             bw.write(Layout.LINE_SEP);
             bw.write("Impto_liq_rni=0");
             bw.write(Layout.LINE_SEP);
