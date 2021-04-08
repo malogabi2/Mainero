@@ -109,6 +109,6 @@ extends JInternalFrame {
             this.buscaUltimoAutorizado();
         }
     }
-
-}
+    
+    }
 

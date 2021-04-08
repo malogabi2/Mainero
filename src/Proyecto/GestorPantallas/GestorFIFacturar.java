@@ -5,18 +5,14 @@ package Proyecto.GestorPantallas;
 
 import Proyecto.GestorArchivos.GestorAConfiguracion;
 import Proyecto.GestorArchivos.GestorAFactura;
-import Proyecto.GestorDB.GestorDBFE_Electronica;
 import Proyecto.Intermediario.GestorComunicacion;
 import Proyecto.Intermediario.GestorPedidoLlaves;
+import Proyecto.mainerofacturero.pantalla.FIComprobantesAsociados;
 import Proyecto.modelo.Configuracion;
-import Proyecto.modelo.DetalleFactura;
 import Proyecto.modelo.Factura;
-import Proyecto.modelo.Permisos;
 import Proyecto.modelo.Producto;
 import Proyecto.modelo.Sucursal;
 import Proyecto.modelo.TipoComprobante;
-import Proyecto.modelo.TokenSign;
-import Proyecto.modelo.Usuario;
 import Proyecto.utilerias.Utilerias;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,7 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JOptionPane;
+import javax.swing.JDesktopPane;
 import org.apache.log4j.Priority;
 import utiles.logger.LoggerBitacora;
 
@@ -89,6 +85,14 @@ public class GestorFIFacturar {
         GestorComunicacion gescom = new GestorComunicacion(this.conf);
         gescom.buscarTiposMonedasValidosWSFE();
     }
+    
+    public void buscarComprobantesAsociados(JDesktopPane escritorio) {
+        FIComprobantesAsociados fi = new FIComprobantesAsociados();
+        fi.setClosable(true);
+        fi.setVisible(true);
+        fi.setFacturaElegida(facturaElegida);
+        escritorio.add(fi);
+    }
 
     public boolean estaFacturado() {
         return this.facturaElegida.estaFacturado();
@@ -96,7 +100,10 @@ public class GestorFIFacturar {
 
     public void buscarComprobante(String comprobanteNum, int indexSucursal, Object indexTipoComprobante) {
         this.facturaElegida = null;
-        this.facturaElegida = Utilerias.pasarObjetoAFacturas(this.conf.getGestorDBFacturaElectParaBuscar().traerDatos(new Object[]{comprobanteNum, this.conf.getUsuarioLogueado().mostrarItemSucursal(indexSucursal).getNumero(), ((TipoComprobante)indexTipoComprobante).getNumeroReal()}))[0];
+        this.facturaElegida = Utilerias.pasarObjetoAFacturas(this.conf.getGestorDBFacturaElectParaBuscar()
+                .traerDatos(new Object[]{comprobanteNum, this.conf.getUsuarioLogueado()
+                        .mostrarItemSucursal(indexSucursal).getNumero(), ((TipoComprobante)indexTipoComprobante).getNumeroReal()}))[0];
+        this.conf.getGestorDBFacturaElectParaBuscar().traerComprobantesAsociados(facturaElegida);
     }
 
     public String getCodMoneda() {
@@ -321,5 +328,5 @@ public class GestorFIFacturar {
         }
         return false;
     }
-   
+
 }

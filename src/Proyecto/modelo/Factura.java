@@ -3,11 +3,8 @@
  */
 package Proyecto.modelo;
 
-import Proyecto.modelo.DetalleFactura;
-import Proyecto.modelo.Producto;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 
 public class Factura {
     private String tipo_comprobante;
@@ -34,8 +31,10 @@ public class Factura {
     private int tipoCambio;
     private String producto;
     private String importeTotal;
-    ArrayList<DetalleFactura> facDeta = new ArrayList();
-    ArrayList<Producto> producs = new ArrayList();
+    private ArrayList<DetalleFactura> facDeta = new ArrayList();
+    private ArrayList<Producto> producs = new ArrayList();
+    private ArrayList<ComprobanteAsociado> comprobanteAsociados = new ArrayList();
+    private ArrayList<PeriodoAsoc> periodoAsoc = new ArrayList();
 
     public Object[] filas() {
         boolean bol = false;
@@ -44,6 +43,14 @@ public class Factura {
 
     public void agregarItemDetalleFactura(DetalleFactura item) {
         this.facDeta.add(item);
+    }
+    
+    public void agregarComprobanteAsoc(ComprobanteAsociado item) {
+        this.comprobanteAsociados.add(item);
+    }
+    
+    public void agregarPeriodoAsoc(PeriodoAsoc item) {
+        this.periodoAsoc.add(item);
     }
 
     public DetalleFactura mostrarItemDetalleFactura(int pos) {
@@ -303,6 +310,34 @@ public class Factura {
 
     public void setProducto(String producto) {
         this.producto = producto;
+    }
+
+    /**
+     * @return the comprobanteAsociados
+     */
+    public ArrayList<ComprobanteAsociado> getComprobanteAsociados() {
+        return comprobanteAsociados;
+    }
+
+    /**
+     * @param comprobanteAsociados the comprobanteAsociados to set
+     */
+    public void setComprobanteAsociados(ArrayList<ComprobanteAsociado> comprobanteAsociados) {
+        this.comprobanteAsociados = comprobanteAsociados;
+    }
+
+    /**
+     * @return the periodoAsoc
+     */
+    public ArrayList<PeriodoAsoc> getPeriodoAsoc() {
+        return periodoAsoc;
+    }
+
+    /**
+     * @param periodoAsoc the periodoAsoc to set
+     */
+    public void setPeriodoAsoc(ArrayList<PeriodoAsoc> periodoAsoc) {
+        this.periodoAsoc = periodoAsoc;
     }
 }
 

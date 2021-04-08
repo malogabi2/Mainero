@@ -374,5 +374,13 @@ public class Configuracion {
      public GestorDBFE_Electronica getGestorDBFacturaElectParaBuscar() {
         return this.gestorDBFacturaElect;
     }
+     
+    public static Configuracion getMockConfiguration() {
+        Configuracion conf = new Configuracion();
+        Usuario user = new Usuario("mockUser", "mockPassw", 0);
+        conf.setUsuarioLogueado(user);
+        return conf;
+    }
+            
 }
 

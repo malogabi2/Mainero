@@ -335,6 +335,6 @@ extends JFrame {
     private void formComponentShown(ComponentEvent evt) {
         this.cargarPantallaSegunPermisos();
     }
-
-}
+    
+    }
 

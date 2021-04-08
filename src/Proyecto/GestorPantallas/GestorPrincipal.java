@@ -208,7 +208,7 @@ public class GestorPrincipal {
 
     public void llamarFacturar() {
         this.seModificoConfiguracion = GestorPedidoLlaves.actualizoSiEstaVencido(this.getConfiguracionPrivada());
-        FIFacturar fac = new FIFacturar(this.getConfiguracionPrivada());
+        FIFacturar fac = new FIFacturar(escritorio, this.getConfiguracionPrivada());
         fac.setClosable(true);
         fac.setMaximizable(true);
         fac.setVisible(true);

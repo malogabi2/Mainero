@@ -21,6 +21,8 @@ import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDesktopPane;
+import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -33,6 +35,7 @@ public class FIFacturar
         extends JInternalFrame {
 
     private GestorFIFacturar gestor;
+    private JDesktopPane escritorio;
     private JButton bt_buscaComprobante;
     private JButton bt_enviarFactura;
     private JButton bt_help_buscaMonedas;
@@ -42,6 +45,7 @@ public class FIFacturar
     private JButton bt_help_tiposIva;
     private JComboBox cmb_sucursalBoca;
     private JComboBox cmb_tipoComprobante;
+    private JButton bt_show_comprobantes_relacionados;
     private JLabel jLabel1;
     private JLabel jLabel10;
     private JLabel jLabel11;
@@ -106,18 +110,20 @@ public class FIFacturar
     private JTextField txt_tipoDocumento;
     private JTextField txt_total;
 
-    public FIFacturar(Configuracion config) {
+    public FIFacturar(JDesktopPane escritorio, Configuracion config) {
         this.gestor = new GestorFIFacturar(config);
         this.initComponents();
         this.setResizable(true);
         this.bt_help_consultarComprobanteAfip.setVisible(false);
         this.bt_enviarFactura.setEnabled(false);
-    }
+        this.escritorio = escritorio;
+    }    
 
     private void initComponents() {
         this.jPanel1 = new JPanel();
         this.txt_fechaComprobante = new JTextField();
         this.jLabel1 = new JLabel();
+        bt_show_comprobantes_relacionados = new JButton();
         this.jLabel3 = new JLabel();
         this.jLabel11 = new JLabel();
         this.txt_gravadoComp = new JTextField();
@@ -290,6 +296,18 @@ public class FIFacturar
                 FIFacturar.this.bt_help_buscaMonedasActionPerformed(evt);
             }
         });
+        
+        this.bt_show_comprobantes_relacionados.setFont(new Font("Tahoma", 0, 14));
+        this.bt_show_comprobantes_relacionados.setIcon(new ImageIcon(this.getClass().getResource("/Proyecto/imagenes/logo_mainero-mini.gif")));
+        this.bt_show_comprobantes_relacionados.setToolTipText("Consultar Comprobantes Relacionados");
+        this.bt_show_comprobantes_relacionados.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                FIFacturar.this.bt_show_comprobantes_relacionados(evt);
+            }
+        });
+        
         this.jLabel25.setFont(new Font("Tahoma", 0, 14));
         this.jLabel25.setText("Comp Num");
         this.jLabel26.setFont(new Font("Tahoma", 0, 14));
@@ -304,8 +322,8 @@ public class FIFacturar
         this.jLabel27.setText("Suc/Boc");
         GroupLayout jPanel1Layout = new GroupLayout(this.jPanel1);
         this.jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addComponent(this.jLabel3).addGap(74, 74, 74).addComponent(this.jLabel25).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(this.txt_compNumMostrar, -2, 75, -2).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(this.jLabel26).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(this.txt_tipoCompoMostrar).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(this.jLabel27).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(this.txt_sucBocMostrar, -2, 86, -2)).addGroup(jPanel1Layout.createSequentialGroup().addContainerGap().addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false).addGroup(jPanel1Layout.createSequentialGroup().addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(this.jLabel13).addComponent(this.jLabel12).addComponent(this.jLabel11)).addGap(39, 39, 39).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(this.txt_montoIvaInscripto).addComponent(this.txt_noGravado).addComponent(this.txt_gravadoComp))).addGroup(jPanel1Layout.createSequentialGroup().addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(this.jLabel14).addComponent(this.jLabel15).addComponent(this.jLabel23)).addGap(18, 18, 18).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false).addGroup(jPanel1Layout.createSequentialGroup().addComponent(this.txt_codMoneda, -2, 50, -2).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(this.jLabel22).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(this.txt_tipoCambio, -2, 61, -2)).addComponent(this.txt_montoIvaNoInscripto).addComponent(this.txt_exento)))).addGap(18, 18, 18).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false).addComponent(this.jPanel4, GroupLayout.Alignment.TRAILING, -2, -1, -2).addGroup(GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup().addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.TRAILING).addGroup(jPanel1Layout.createSequentialGroup().addComponent(this.bt_help_buscaMonedas, -2, 25, -2).addGap(70, 70, 70).addComponent(this.jLabel24).addGap(26, 26, 26).addComponent(this.txt_total)).addGroup(jPanel1Layout.createSequentialGroup().addComponent(this.jLabel21).addGap(18, 18, 18).addComponent(this.txt_impuestoInternos, -2, 137, -2).addGap(32, 32, 32).addComponent(this.txt_impuestoInterno_porcep, -2, 59, -2).addGap(0, 0, 32767))).addGap(14, 14, 14)))).addGroup(jPanel1Layout.createSequentialGroup().addComponent(this.jLabel1).addGap(18, 18, 18).addComponent(this.txt_fechaComprobante, -2, 107, -2))).addContainerGap()));
-        jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(this.jLabel3).addComponent(this.jLabel25).addComponent(this.jLabel26).addComponent(this.txt_compNumMostrar, -2, -1, -2).addComponent(this.txt_tipoCompoMostrar, -2, -1, -2).addComponent(this.txt_sucBocMostrar, -2, -1, -2).addComponent(this.jLabel27)).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(this.txt_fechaComprobante, -2, -1, -2).addComponent(this.jLabel1)).addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false).addGroup(jPanel1Layout.createSequentialGroup().addComponent(this.jPanel4, -2, -1, -2).addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(this.jLabel21).addComponent(this.txt_impuestoInternos, -2, -1, -2).addComponent(this.txt_impuestoInterno_porcep, -2, -1, -2)).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, -1, 32767).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(this.bt_help_buscaMonedas, GroupLayout.Alignment.TRAILING).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(this.jLabel24).addComponent(this.txt_total, -2, -1, -2)))).addGroup(jPanel1Layout.createSequentialGroup().addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(this.jLabel11).addComponent(this.txt_gravadoComp, -2, -1, -2)).addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(this.jLabel12).addComponent(this.txt_noGravado, -2, -1, -2)).addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(this.jLabel13).addComponent(this.txt_montoIvaInscripto, -2, -1, -2)).addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(this.jLabel14).addComponent(this.txt_montoIvaNoInscripto, -2, -1, -2)).addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(this.jLabel15).addComponent(this.txt_exento, -2, -1, -2)).addGap(18, 18, 18).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(this.jLabel23).addComponent(this.txt_codMoneda, -2, -1, -2)).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(this.jLabel22).addComponent(this.txt_tipoCambio, -2, -1, -2))))).addContainerGap(14, 32767)));
+        jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addComponent(this.jLabel3).addGap(74, 74, 74).addComponent(this.jLabel25).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(this.txt_compNumMostrar, -2, 75, -2).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(this.jLabel26).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(this.txt_tipoCompoMostrar).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(this.jLabel27).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(this.txt_sucBocMostrar, -2, 86, -2)).addGroup(jPanel1Layout.createSequentialGroup().addContainerGap().addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false).addGroup(jPanel1Layout.createSequentialGroup().addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(this.jLabel13).addComponent(this.jLabel12).addComponent(this.jLabel11)).addGap(39, 39, 39).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(this.txt_montoIvaInscripto).addComponent(this.txt_noGravado).addComponent(this.txt_gravadoComp))).addGroup(jPanel1Layout.createSequentialGroup().addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(this.jLabel14).addComponent(this.jLabel15).addComponent(this.jLabel23)).addGap(18, 18, 18).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false).addGroup(jPanel1Layout.createSequentialGroup().addComponent(this.txt_codMoneda, -2, 50, -2).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(this.jLabel22).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(this.txt_tipoCambio, -2, 61, -2)).addComponent(this.txt_montoIvaNoInscripto).addComponent(this.txt_exento)))).addGap(18, 18, 18).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false).addComponent(this.jPanel4, GroupLayout.Alignment.TRAILING, -2, -1, -2).addGroup(GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup().addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.TRAILING).addGroup(jPanel1Layout.createSequentialGroup().addComponent(this.bt_help_buscaMonedas, -2, 25, -2).addGap(70, 70, 70).addComponent(this.jLabel24).addGap(26, 26, 26).addComponent(this.txt_total)).addGroup(jPanel1Layout.createSequentialGroup().addComponent(this.jLabel21).addGap(18, 18, 18).addComponent(this.txt_impuestoInternos, -2, 137, -2).addGap(32, 32, 32).addComponent(this.txt_impuestoInterno_porcep, -2, 59, -2).addGap(0, 0, 32767))).addGap(14, 14, 14)))).addGroup(jPanel1Layout.createSequentialGroup().addComponent(this.jLabel1).addGap(18, 18, 18).addComponent(this.txt_fechaComprobante, -2, 107, -2).addGap(800, 800, 800).addComponent(bt_show_comprobantes_relacionados))).addContainerGap()));
+        jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(this.jLabel3).addComponent(this.jLabel25).addComponent(this.jLabel26).addComponent(this.txt_compNumMostrar, -2, -1, -2).addComponent(this.txt_tipoCompoMostrar, -2, -1, -2).addComponent(this.txt_sucBocMostrar, -2, -1, -2).addComponent(this.jLabel27)).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(this.txt_fechaComprobante, -2, -1, -2).addComponent(this.jLabel1).addComponent(bt_show_comprobantes_relacionados)).addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false).addGroup(jPanel1Layout.createSequentialGroup().addComponent(this.jPanel4, -2, -1, -2).addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(this.jLabel21).addComponent(this.txt_impuestoInternos, -2, -1, -2).addComponent(this.txt_impuestoInterno_porcep, -2, -1, -2)).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, -1, 32767).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(this.bt_help_buscaMonedas, GroupLayout.Alignment.TRAILING).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(this.jLabel24).addComponent(this.txt_total, -2, -1, -2)))).addGroup(jPanel1Layout.createSequentialGroup().addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(this.jLabel11).addComponent(this.txt_gravadoComp, -2, -1, -2)).addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(this.jLabel12).addComponent(this.txt_noGravado, -2, -1, -2)).addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(this.jLabel13).addComponent(this.txt_montoIvaInscripto, -2, -1, -2)).addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(this.jLabel14).addComponent(this.txt_montoIvaNoInscripto, -2, -1, -2)).addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(this.jLabel15).addComponent(this.txt_exento, -2, -1, -2)).addGap(18, 18, 18).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(this.jLabel23).addComponent(this.txt_codMoneda, -2, -1, -2)).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(this.jLabel22).addComponent(this.txt_tipoCambio, -2, -1, -2))))).addContainerGap(14, 32767)));
         this.jPanel2.setBorder(BorderFactory.createEtchedBorder());
         this.jLabel4.setFont(new Font("Tahoma", 0, 14));
         this.jLabel4.setText("Tipo Comprobante");
@@ -475,6 +493,10 @@ public class FIFacturar
     private void bt_help_buscaMonedasActionPerformed(ActionEvent evt) {
         this.gestor.buscarTipoMonedas();
     }
+    
+    private void bt_show_comprobantes_relacionados(ActionEvent evt) {
+        this.gestor.buscarComprobantesAsociados(escritorio);
+    }
 
     private void formComponentShown(ComponentEvent evt) {
         this.cmb_sucursalBoca.setModel(this.gestor.traerSucursales());
@@ -639,4 +661,17 @@ public class FIFacturar
         this.txt_productoNomenclador.setEditable(false);
     }
 
+    
+     public static void main(String ... args){
+        JDesktopPane escritorio = new JDesktopPane(); 
+        JFrame frame = new JFrame();
+        FIFacturar fibu = new FIFacturar(escritorio, Configuracion.getMockConfiguration());        
+        //fibu.setSucursales(Configuracion.getMockConfiguration());
+        fibu.setClosable(true);
+        fibu.setVisible(true);
+        escritorio.add(fibu);
+        frame.add(escritorio);
+        frame.setVisible(true);
+        
+    }
 }

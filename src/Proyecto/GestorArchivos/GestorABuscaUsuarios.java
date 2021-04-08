@@ -17,6 +17,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.log4j.Layout;
@@ -49,9 +52,8 @@ public class GestorABuscaUsuarios {
             }
             bw.close();
         } catch (IOException ex) {
-            LoggerBitacora.getInstance(GestorAConfiguracion.class).
-                    logueadorMainero.log("un Mensaje", Priority.ERROR, 
-                    "Error al guardar usuario", ex); 
+            LoggerBitacora.getInstance(GestorAConfiguracion.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                    "Error al guardar usuario", ex);
             Logger.getLogger(GestorABuscaUsuarios.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -63,9 +65,8 @@ public class GestorABuscaUsuarios {
                 bw.write(paraItem[i]);
                 continue;
             } catch (IOException ex) {
-                LoggerBitacora.getInstance(GestorABuscaUsuarios.class).
-                    logueadorMainero.log("un Mensaje", Priority.ERROR, 
-                    "Error al guardar item", ex); 
+                LoggerBitacora.getInstance(GestorABuscaUsuarios.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error al guardar item", ex);
                 Logger.getLogger(GestorAConfiguracion.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -123,24 +124,21 @@ public class GestorABuscaUsuarios {
                 fr.close();
                 return Utilerias.pasarObjetoAUsuario(ussrs.toArray());
             } catch (IOException ex1) {
-                LoggerBitacora.getInstance(GestorABuscaUsuarios.class).
-                    logueadorMainero.log("un Mensaje", Priority.ERROR, 
-                    "Error al traer usuarios", ex1); 
+                LoggerBitacora.getInstance(GestorABuscaUsuarios.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error al traer usuarios", ex1);
                 Logger.getLogger(GestorAConfiguracion.class.getName()).log(Level.SEVERE, null, ex1);
                 return Utilerias.pasarObjetoAUsuario(ussrs.toArray());
             }
         } catch (IOException ex2) {
-            LoggerBitacora.getInstance(GestorABuscaUsuarios.class).
-                    logueadorMainero.log("un Mensaje", Priority.ERROR, 
-                    "Error al traer usuarios", ex2); 
+            LoggerBitacora.getInstance(GestorABuscaUsuarios.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                    "Error al traer usuarios", ex2);
             Logger.getLogger(GestorAConfiguracion.class.getName()).log(Level.SEVERE, null, ex2);
             try {
                 fr.close();
                 return Utilerias.pasarObjetoAUsuario(ussrs.toArray());
             } catch (IOException ex3) {
-                LoggerBitacora.getInstance(GestorABuscaUsuarios.class).
-                    logueadorMainero.log("un Mensaje", Priority.ERROR, 
-                    "Error al traer usuarios", ex3); 
+                LoggerBitacora.getInstance(GestorABuscaUsuarios.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error al traer usuarios", ex3);
                 Logger.getLogger(GestorAConfiguracion.class.getName()).log(Level.SEVERE, null, ex3);
                 return Utilerias.pasarObjetoAUsuario(ussrs.toArray());
             }
@@ -149,9 +147,8 @@ public class GestorABuscaUsuarios {
                 fr.close();
                 return Utilerias.pasarObjetoAUsuario(ussrs.toArray());
             } catch (IOException ex) {
-                LoggerBitacora.getInstance(GestorABuscaUsuarios.class).
-                    logueadorMainero.log("un Mensaje", Priority.ERROR, 
-                    "Error al traer usuarios", ex); 
+                LoggerBitacora.getInstance(GestorABuscaUsuarios.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Error al traer usuarios", ex);
                 Logger.getLogger(GestorAConfiguracion.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
