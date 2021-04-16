@@ -34,7 +34,7 @@ public class Factura {
     private ArrayList<DetalleFactura> facDeta = new ArrayList();
     private ArrayList<Producto> producs = new ArrayList();
     private ArrayList<ComprobanteAsociado> comprobanteAsociados = new ArrayList();
-    private ArrayList<PeriodoAsoc> periodoAsoc = new ArrayList();
+    private PeriodoAsoc periodoAsoc;
 
     public Object[] filas() {
         boolean bol = false;
@@ -49,10 +49,6 @@ public class Factura {
         this.comprobanteAsociados.add(item);
     }
     
-    public void agregarPeriodoAsoc(PeriodoAsoc item) {
-        this.periodoAsoc.add(item);
-    }
-
     public DetalleFactura mostrarItemDetalleFactura(int pos) {
         return this.facDeta.get(pos);
     }
@@ -68,7 +64,11 @@ public class Factura {
     public void agregarItemsDetalleFactura(DetalleFactura[] itms) {
         this.facDeta.addAll(Arrays.asList(itms));
     }
-
+    
+    public int cantidadComprobantesAsociados() {
+        return this.comprobanteAsociados.size();
+    }
+    
     public int cantidadItemsDetalleFactura() {
         return this.facDeta.size();
     }
@@ -329,14 +329,14 @@ public class Factura {
     /**
      * @return the periodoAsoc
      */
-    public ArrayList<PeriodoAsoc> getPeriodoAsoc() {
+    public PeriodoAsoc getPeriodoAsoc() {
         return periodoAsoc;
     }
 
     /**
      * @param periodoAsoc the periodoAsoc to set
      */
-    public void setPeriodoAsoc(ArrayList<PeriodoAsoc> periodoAsoc) {
+    public void setPeriodoAsoc(PeriodoAsoc periodoAsoc) {
         this.periodoAsoc = periodoAsoc;
     }
 }

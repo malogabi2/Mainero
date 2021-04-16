@@ -37,10 +37,8 @@ public class GestorFIComprobanteAsociados {
         }
     }
     
-     public void traerPeriodoAsociado(TableModel model) {
+    public void traerPeriodoAsociado(TableModel model) {
         this.tablita = (DefaultTableModel)model;
-        for (int i = 0; i < this.facturaElegida.getPeriodoAsoc().size(); ++i) {
-            this.tablita.addRow(this.facturaElegida.getPeriodoAsoc().get(i).filas());
-        }
+        this.tablita.addRow(this.facturaElegida.getPeriodoAsoc().filas());
     }
 }

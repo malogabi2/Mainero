@@ -45,10 +45,7 @@ public class FIComprobantesAsociados extends javax.swing.JInternalFrame {
 
         tbl_PeriodoAsociado.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "Fecha Desde", "Fecha Hasta"
@@ -62,10 +59,7 @@ public class FIComprobantesAsociados extends javax.swing.JInternalFrame {
 
         tbl_comprobanteAsociado1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Tipo", "Boca", "Numero", "Fecha"

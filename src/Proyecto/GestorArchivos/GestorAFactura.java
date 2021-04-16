@@ -6,6 +6,7 @@
  */
 package Proyecto.GestorArchivos;
 
+import Proyecto.modelo.ComprobanteAsociado;
 import Proyecto.modelo.Factura;
 import Proyecto.modelo.TokenSign;
 import Proyecto.utilerias.Utilerias;
@@ -98,6 +99,8 @@ public class GestorAFactura {
             bw.write("MonId=PES");
             bw.write(Layout.LINE_SEP);
             bw.write("MonCotiz=1");
+            bw = this.armarPeriodoAsoc(bw, fac);
+            bw = this.armarComprobanteAsociados(bw, fac);
             bw = this.armarIva(bw, fac);
             bw = this.armarTributo(bw, fac);
             bw.close();
@@ -195,7 +198,7 @@ public class GestorAFactura {
         }
         return bw;
     }
-
+    
     private BufferedWriter armarIva(BufferedWriter bw, Factura fac) {
         try {
             int cantiva = 0;
@@ -229,6 +232,50 @@ public class GestorAFactura {
              LoggerBitacora.getInstance(GestorAFactura.class).
                     logueadorMainero.log("un Mensaje", Priority.ERROR, 
                     "Error al armar iva: " + this.archivoFactura, ex);
+            Logger.getLogger(GestorAFactura.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return bw;
+    }
+    
+     private BufferedWriter armarPeriodoAsoc(BufferedWriter bw, Factura fac) {
+        try {
+            if(fac.getPeriodoAsoc() != null) {
+                bw.write(Layout.LINE_SEP);
+                bw.write("PeriodoAsocFchDesde=" + fac.getPeriodoAsoc().getFechDesde());
+                bw.write(Layout.LINE_SEP);
+                bw.write("PeriodoAsocFchHasta=" + fac.getPeriodoAsoc().getFechHasta());
+            }
+           
+        } catch (IOException ex) {
+            LoggerBitacora.getInstance(GestorAFactura.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                    "Error al armar comprobante asociados: " + this.archivoFactura, ex);
+            Logger.getLogger(GestorAFactura.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return bw;
+    }
+
+    private BufferedWriter armarComprobanteAsociados(BufferedWriter bw, Factura fac) {
+        try {
+            int cantComprobantes = fac.cantidadComprobantesAsociados();
+            bw.write(Layout.LINE_SEP);  
+            bw.write("CantidadComprobanteAsociados=" + cantComprobantes);
+            if (cantComprobantes == 0) {
+                return bw;
+            }           
+            int punt = 0;
+            for (ComprobanteAsociado comprobanteAsociado : fac.getComprobanteAsociados()) {
+                punt++;
+                bw.write(Layout.LINE_SEP);
+                bw.write("CompoAsocTipo"+ punt + "=" + comprobanteAsociado.getTipo_comprobante());
+                bw.write(Layout.LINE_SEP);
+                bw.write("CompoAsocPtoVta"+ punt + "=" + comprobanteAsociado.getSuc_comprobante());
+                bw.write(Layout.LINE_SEP);
+                bw.write("CompoAsocNro"+ punt + "=" + comprobanteAsociado.getNum_nombrante());
+            }
+
+        } catch (IOException ex) {
+            LoggerBitacora.getInstance(GestorAFactura.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                    "Error al armar comprobante asociados: " + this.archivoFactura, ex);
             Logger.getLogger(GestorAFactura.class.getName()).log(Level.SEVERE, null, ex);
         }
         return bw;

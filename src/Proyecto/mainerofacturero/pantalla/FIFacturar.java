@@ -25,6 +25,7 @@ import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
@@ -120,6 +121,7 @@ public class FIFacturar
     }    
 
     private void initComponents() {
+        JOptionPane.showMessageDialog(null, "Hola");
         this.jPanel1 = new JPanel();
         this.txt_fechaComprobante = new JTextField();
         this.jLabel1 = new JLabel();

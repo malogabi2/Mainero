@@ -6,9 +6,7 @@ package wfewfbe.LectorFactura;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
-import wfewfbe.LectorFactura.LectorEntradaFactura;
 
 public class LectorEntradaFacturaFE
 extends LectorEntradaFactura {
@@ -55,6 +53,8 @@ extends LectorEntradaFactura {
         prtos[24] = config.getProperty("CantidadTrib", "error");
         prtos = this.rutinaDeIvas(prtos, config);
         prtos = this.rutinaDeTributos(prtos, config);
+        prtos = this.rutinaDeComproAsociados(prtos, config);
+        prtos = this.rutinaDePeriodoAsociados(prtos, config);
         return prtos;
     }
 
@@ -92,6 +92,49 @@ extends LectorEntradaFactura {
                 i += 4;
             }
         }
+        return aux;
+    }
+
+    private String[] rutinaDeComproAsociados(String[] parametros, Properties config) {
+        int cantidadTributo = parametros[24].equals("error") ? 1 : Integer.valueOf(parametros[24]);
+        int cantidadIva = parametros[23].equals("error") ? 1 : Integer.valueOf(parametros[23]);
+        int posCantidadComprobante = 24 + (cantidadIva * 3) + (cantidadTributo * 5) ;
+        int cantidadComprobante = parametros[posCantidadComprobante].equals("error") ? 0 : Integer.valueOf(parametros[posCantidadComprobante]);
+        if(cantidadComprobante == 0) {
+            String[] aux = new String[parametros.length + 1];
+            System.arraycopy(parametros, 0, aux, 0, parametros.length);
+            aux[parametros.length] = "0";
+            return aux;
+        }
+        String[] aux = new String[parametros.length + (cantidadComprobante * 3) + 1];
+        System.arraycopy(parametros, 0, aux, 0, parametros.length);
+        aux[parametros.length] = String.valueOf(cantidadComprobante);
+        int conta = 1;
+        for (int i = parametros.length; i < aux.length; ++i) {
+            aux[i+1] = config.getProperty("CompoAsocTipo" + String.valueOf(conta));
+            aux[i+2] = config.getProperty("CompoAsocPtoVta" + String.valueOf(conta));
+            aux[i+3] = config.getProperty("CompoAsocNro" + String.valueOf(conta));
+            conta++;
+            ++i;
+            ++i;
+        }
+        return aux;
+    }
+    
+    private String[] rutinaDePeriodoAsociados(String[] parametros, Properties config) {
+        int cantidadTributo = parametros[24].equals("error") ? 1 : Integer.valueOf(parametros[24]);
+        int cantidadIva = parametros[23].equals("error") ? 1 : Integer.valueOf(parametros[23]);
+        int posCantidadComprobante = 24 + (cantidadIva * 3) + (cantidadTributo * 5) ;
+        int cantidadComprobante = parametros[posCantidadComprobante].equals("error") ? 0 : Integer.valueOf(parametros[posCantidadComprobante]);
+        int posPeriodoAsociado = posCantidadComprobante + (cantidadComprobante * 3);
+        if(posPeriodoAsociado >= parametros.length) {
+            return parametros;
+        }
+        String[] aux = new String[parametros.length + 2];
+        System.arraycopy(parametros, 0, aux, 0, parametros.length);
+        aux[parametros.length] = config.getProperty("PeriodoAsocFchDesde");
+        aux[parametros.length + 1] = config.getProperty("PeriodoAsocFchHasta");               
+               
         return aux;
     }
 }
