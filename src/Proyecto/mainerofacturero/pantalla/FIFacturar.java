@@ -121,7 +121,6 @@ public class FIFacturar
     }    
 
     private void initComponents() {
-        JOptionPane.showMessageDialog(null, "Hola");
         this.jPanel1 = new JPanel();
         this.txt_fechaComprobante = new JTextField();
         this.jLabel1 = new JLabel();

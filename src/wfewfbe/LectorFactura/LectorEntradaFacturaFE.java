@@ -96,19 +96,17 @@ extends LectorEntradaFactura {
     }
 
     private String[] rutinaDeComproAsociados(String[] parametros, Properties config) {
-        int cantidadTributo = parametros[24].equals("error") ? 1 : Integer.valueOf(parametros[24]);
-        int cantidadIva = parametros[23].equals("error") ? 1 : Integer.valueOf(parametros[23]);
-        int posCantidadComprobante = 24 + (cantidadIva * 3) + (cantidadTributo * 5) ;
-        int cantidadComprobante = parametros[posCantidadComprobante].equals("error") ? 0 : Integer.valueOf(parametros[posCantidadComprobante]);
-        if(cantidadComprobante == 0) {
+        String cantidadComprobanteAsociados = config.getProperty("CantidadComprobanteAsociados", "error");
+        int cantidadCompro = cantidadComprobanteAsociados.equals("error") ? 0 : Integer.valueOf(cantidadComprobanteAsociados);
+        if(cantidadCompro == 0) {
             String[] aux = new String[parametros.length + 1];
             System.arraycopy(parametros, 0, aux, 0, parametros.length);
             aux[parametros.length] = "0";
             return aux;
         }
-        String[] aux = new String[parametros.length + (cantidadComprobante * 3) + 1];
+        String[] aux = new String[parametros.length + (cantidadCompro * 3) + 1];
         System.arraycopy(parametros, 0, aux, 0, parametros.length);
-        aux[parametros.length] = String.valueOf(cantidadComprobante);
+        aux[parametros.length] = String.valueOf(cantidadCompro);
         int conta = 1;
         for (int i = parametros.length; i < aux.length; ++i) {
             aux[i+1] = config.getProperty("CompoAsocTipo" + String.valueOf(conta));
@@ -124,7 +122,7 @@ extends LectorEntradaFactura {
     private String[] rutinaDePeriodoAsociados(String[] parametros, Properties config) {
         int cantidadTributo = parametros[24].equals("error") ? 1 : Integer.valueOf(parametros[24]);
         int cantidadIva = parametros[23].equals("error") ? 1 : Integer.valueOf(parametros[23]);
-        int posCantidadComprobante = 24 + (cantidadIva * 3) + (cantidadTributo * 5) ;
+        int posCantidadComprobante = (24 + (cantidadIva * 3) + (cantidadTributo * 5) ) + 1;
         int cantidadComprobante = parametros[posCantidadComprobante].equals("error") ? 0 : Integer.valueOf(parametros[posCantidadComprobante]);
         int posPeriodoAsociado = posCantidadComprobante + (cantidadComprobante * 3);
         if(posPeriodoAsociado >= parametros.length) {

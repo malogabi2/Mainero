@@ -6,7 +6,7 @@ package wfewfbe.metodo.wfev1;
 public class FECAESolicitar
 extends Mensajes {
     private String mensajeInicioParte(String[] parametros) {
-        return "<FECAESolicitar xmlns=\"http://ar.gov.afip.dif.FEV1MaineroPrueba/\"><Auth><TokenMainero>" + parametros[0] + "</Token>" + "<Sign>" + parametros[1] + "</Sign>" + "<Cuit>" + parametros[2] + "</Cuit>" + "</Auth>" + "<FeCAEReq>" + "<FeCabReq>" + "<CantReg>" + parametros[3] + "</CantReg>" + "<PtoVta>" + parametros[4] + "</PtoVta>" + "<CbteTipo>" + parametros[5] + "</CbteTipo>" + "</FeCabReq>" + "<FeDetReq>" + "<FECAEDetRequest>" + "<Concepto>" + parametros[6] + "</Concepto>" + "<DocTipo>" + parametros[7] + "</DocTipo>" + "<DocNro>" + parametros[8] + "</DocNro>" + "<CbteDesde>" + parametros[9] + "</CbteDesde>" + "<CbteHasta>" + parametros[10] + "</CbteHasta>" + "<CbteFch>" + parametros[11] + "</CbteFch>" + "<ImpTotal>" + parametros[12] + "</ImpTotal>" + "<ImpTotConc>" + parametros[13] + "</ImpTotConc>" + "<ImpNeto>" + parametros[14] + "</ImpNeto>" + "<ImpOpEx>" + parametros[15] + "</ImpOpEx>" + "<ImpTrib>" + parametros[16] + "</ImpTrib>" + "<ImpIVA>" + parametros[17] + "</ImpIVA>" + "<MonId>" + parametros[21] + "</MonId>" + "<MonCotiz>" + parametros[22] + "</MonCotiz>";
+        return "<FECAESolicitar xmlns=\"http://ar.gov.afip.dif.FEV1/\"><Auth><Token>" + parametros[0] + "</Token>" + "<Sign>" + parametros[1] + "</Sign>" + "<Cuit>" + parametros[2] + "</Cuit>" + "</Auth>" + "<FeCAEReq>" + "<FeCabReq>" + "<CantReg>" + parametros[3] + "</CantReg>" + "<PtoVta>" + parametros[4] + "</PtoVta>" + "<CbteTipo>" + parametros[5] + "</CbteTipo>" + "</FeCabReq>" + "<FeDetReq>" + "<FECAEDetRequest>" + "<Concepto>" + parametros[6] + "</Concepto>" + "<DocTipo>" + parametros[7] + "</DocTipo>" + "<DocNro>" + parametros[8] + "</DocNro>" + "<CbteDesde>" + parametros[9] + "</CbteDesde>" + "<CbteHasta>" + parametros[10] + "</CbteHasta>" + "<CbteFch>" + parametros[11] + "</CbteFch>" + "<ImpTotal>" + parametros[12] + "</ImpTotal>" + "<ImpTotConc>" + parametros[13] + "</ImpTotConc>" + "<ImpNeto>" + parametros[14] + "</ImpNeto>" + "<ImpOpEx>" + parametros[15] + "</ImpOpEx>" + "<ImpTrib>" + parametros[16] + "</ImpTrib>" + "<ImpIVA>" + parametros[17] + "</ImpIVA>" + "<MonId>" + parametros[21] + "</MonId>" + "<MonCotiz>" + parametros[22] + "</MonCotiz>";
     }
 
     private String mensajeTributo(String[] parametros, String mensajeParcial) {
@@ -47,7 +47,7 @@ extends Mensajes {
     private String mensajeComprobantesAsociado(String[] parametros, String mensajeParcial) {
         int cantidadTributo = parametros[24].equals("error") ? 1 : Integer.valueOf(parametros[24]);
         int cantidadIva = parametros[23].equals("error") ? 1 : Integer.valueOf(parametros[23]);
-        int posCantidadComprobante = 24 + (cantidadIva * 3) + (cantidadTributo * 5) ;
+        int posCantidadComprobante = 24 + (cantidadIva * 3) + (cantidadTributo * 5) + 1 ;
         int cantidadComprobante = parametros[posCantidadComprobante].equals("error") ? 0 : Integer.valueOf(parametros[posCantidadComprobante]);
         if(cantidadComprobante == 0) {
             return mensajeParcial;
@@ -69,15 +69,20 @@ extends Mensajes {
     private String periodoAsociado(String[] parametros, String mensajeParcial) {
         int cantidadTributo = parametros[24].equals("error") ? 1 : Integer.valueOf(parametros[24]);
         int cantidadIva = parametros[23].equals("error") ? 1 : Integer.valueOf(parametros[23]);
-        int posCantidadComprobante = 24 + (cantidadIva * 3) + (cantidadTributo * 5) ;
+        int posCantidadComprobante = 24 + (cantidadIva * 3) + (cantidadTributo * 5) + 1 ;
         int cantidadComprobante = parametros[posCantidadComprobante].equals("error") ? 0 : Integer.valueOf(parametros[posCantidadComprobante]);
         int posPeriodoAsociado = posCantidadComprobante + (cantidadComprobante * 3);
-        if(posPeriodoAsociado >= parametros.length) {
+        if((posPeriodoAsociado +1) >= parametros.length) {
             return mensajeParcial;
         }
-        mensajeParcial = mensajeParcial + "<PeriodoAsoc>";
-        mensajeParcial = mensajeParcial + "<FchDesde>" + parametros[posPeriodoAsociado] + "</FchDesde>" 
-                 + "<FchHasta>" + parametros[posPeriodoAsociado + 1] + "</FchHasta>" + "</PeriodoAsoc>";
+        if(parametros[posPeriodoAsociado+1] != null 
+                && !parametros[posPeriodoAsociado+1].isEmpty() 
+                && !parametros[posPeriodoAsociado+1].equalsIgnoreCase("null")) {
+            mensajeParcial = mensajeParcial + "<PeriodoAsoc>";
+            mensajeParcial = mensajeParcial + "<FchDesde>" + parametros[posPeriodoAsociado+1] + "</FchDesde>" 
+                 + "<FchHasta>" + parametros[posPeriodoAsociado +2] + "</FchHasta>" + "</PeriodoAsoc>";
+        }
+        
         return mensajeParcial;
     }
 
@@ -88,7 +93,7 @@ extends Mensajes {
 
     @Override
     public String soapAction() {
-        return "http://ar.gov.afip.dif.FEV1/FECAEMaineroPruebaSolicitar";
+        return "http://ar.gov.afip.dif.FEV1/FECAESolicitar";
     }
 
     @Override

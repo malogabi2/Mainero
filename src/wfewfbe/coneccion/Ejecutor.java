@@ -31,7 +31,7 @@ public class Ejecutor {
         OutputStreamWriter wout = new OutputStreamWriter(out);
         Date dt = new Date();
         LoggerBitacora.getInstance(Ejecutor.class).logueadorMainero.log("un Mensaje", Priority.INFO,
-                                " A punto de escribir en Server.. Ejecutor.tomaParametros()", null);
+                                " A punto de escribir en Server.. Ejecutor.tomaParametros()" + mensaje.mensaje(parametros, mensaje.nombreMensajeXML()), null);
         this.err.addMensajeError("" + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds() + " A punto de escribir en Server.. Ejecutor.tomaParametros()");
         System.out.println(mensaje.mensaje(parametros, mensaje.nombreMensajeXML()));
      /*   LoggerBitacora.getInstance(Ejecutor.class).logueadorMainero.log("un Mensaje", Priority.INFO,
@@ -51,7 +51,10 @@ public class Ejecutor {
         InputStreamReader isr = new InputStreamReader(connection.getInputStream());
         BufferedReader inbuf = new BufferedReader(isr);
         String inputLine = "";
+        
         inputLine = inbuf.readLine();
+        LoggerBitacora.getInstance(Ejecutor.class).logueadorMainero.log("un Mensaje", Priority.INFO,
+                                " A punto de escribir en Server.. Ejecutor.tomaParametros()" + inputLine, null);
         dt = new Date();
         this.err.addMensajeError("" + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds() + " ya lei respuesta en Server .. Ejecutor.leerRepuesta()");
         return inputLine;

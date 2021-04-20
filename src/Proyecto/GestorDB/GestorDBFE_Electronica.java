@@ -3,7 +3,6 @@
  */
 package Proyecto.GestorDB;
 
-import Proyecto.GestorPantallas.FError;
 import Proyecto.mainerofacturero.pantalla.DError;
 import Proyecto.modelo.ComprobanteAsociado;
 import Proyecto.modelo.Configuracion;
@@ -15,7 +14,6 @@ import Proyecto.utilerias.Utilerias;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -113,62 +111,49 @@ public class GestorDBFE_Electronica extends GestorDB {
         }
         return (String) objeto;
     }
-    
+
     public void traerComprobantesAsociados(Factura fac) {
         String con = "select ft_electroasoc.fta2_tipo, ft_electroasoc.fta2_boca, ft_electroasoc.fta2_comprobante,"
                 + " ft_electroasoc.fta2_fecha, ft_electroasoc.fta2_fechah "
-                + "from ft_electroasoc  where ft_electroasoc.fta_tipo=" + fac.getTipo_comprobante() + 
-                " and ft_electroasoc.fta_boca=" + fac.getSuc_comprobante() + " and ft_electroasoc.fta_comprobante=" + fac.getNum_nombrante() + 
-                " and ft_electroasoc.fta_tipo <> 999 order by "
-                + "ft_electroasoc.fta2_tipo,ft_electroasoc.fta2_boca";
-        FError error = new FError();
-        error.setMensaje(con);
-        JOptionPane.showMessageDialog(null, con);
+                + "from ft_electroasoc  where ft_electroasoc.fta_tipo=" + fac.getTipo_comprobante()
+                + " and ft_electroasoc.fta_boca=" + fac.getSuc_comprobante() + " and ft_electroasoc.fta_comprobante=" + fac.getNum_nombrante()
+                + " and ft_electroasoc.fta_tipo <> 999 order by "
+                + "ft_electroasoc.fta2_tipo,ft_electroasoc.fta2_boca";        
+        
         Conectar conectar = this.getConectar();
         if (conectar.isActivaLaConexion()) {
             try {
                 ResultSet rs = conectar.Select(con);
                 while (rs.next()) {
-                    ComprobanteAsociado comproAsociado = new ComprobanteAsociado();
-                    comproAsociado.setTipo_comprobante(rs.getString(1));
-                    comproAsociado.setSuc_comprobante(rs.getString(2));
-                    comproAsociado.setNum_nombrante(rs.getString(3));
-                    comproAsociado.setFecha(rs.getString(4));
-                    error.setMensaje("Comprobante Tipo: " 
-                            + comproAsociado.getTipo_comprobante()
-                            + ", Suc: " + comproAsociado.getSuc_comprobante()
-                            + ", Nun Compro: " + comproAsociado.getNum_nombrante()
-                            + ", Fecha: " + comproAsociado.getFecha());
-                   
-                    fac.agregarComprobanteAsoc(comproAsociado);
+                    String tipoComprobante = rs.getString(1);
+                    String fecha = rs.getString(4);
+                    if (!tipoComprobante.equals("0")) {
+                        ComprobanteAsociado comproAsociado = new ComprobanteAsociado();
+                        comproAsociado.setTipo_comprobante(tipoComprobante);
+                        comproAsociado.setSuc_comprobante(rs.getString(2));
+                        comproAsociado.setNum_nombrante(rs.getString(3));                        
+                        comproAsociado.setFecha(fecha);
+                        fac.agregarComprobanteAsoc(comproAsociado);
+                    }           
+
                     String fechaHasta = rs.getString(5);
-                    if(comproAsociado.getFecha()!=null 
-                            && !comproAsociado.getFecha().equals("null") 
-                            && !comproAsociado.getFecha().equals("")
-                            && fechaHasta != null 
+                    if (fecha != null
+                            && !fecha.equals("null")
+                            && !fecha.equals("")
+                            && fechaHasta != null
                             && !fechaHasta.equals("null")
                             && !fechaHasta.equals("")) {
                         PeriodoAsoc periodoAsoc = new PeriodoAsoc();
-                        periodoAsoc.setFechDesde(comproAsociado.getFecha());
-                        periodoAsoc.setFechHasta(rs.getString(5));
-                        error.setMensaje("Periodo Fecha Desde " + periodoAsoc.getFechDesde()
-                                        + " Fecha Hasta: " + periodoAsoc.getFechHasta());        
-                    
+                        periodoAsoc.setFechDesde(fecha);
+                        periodoAsoc.setFechHasta(fechaHasta);
                         fac.setPeriodoAsoc(periodoAsoc);
                     }
-                    
                 }
             } catch (SQLException ex) {
-                error.setMensaje("Error al traer datos");
-                error.setMensaje(ex.toString());
-                error.setMensaje(ex.getSQLState());
-                error.setMensaje(ex.getMessage());
                 LoggerBitacora.getInstance(GestorDBFE_Electronica.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
                         "Error al traer datos", ex);
                 Logger.getLogger(GestorDBFE_Electronica.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            finally{
-                error.setVisible(true);
+            } finally {               
             }
         }
     }
@@ -261,7 +246,7 @@ public class GestorDBFE_Electronica extends GestorDB {
 
     public void guardarCae(ArrayList<String> capmos, ArrayList<String> valores, String tipoCompro,
             String sucursal, String numeroCompro, boolean esFiscal, MensajeError err) {
-        
+
         String caeParaLoguear = !esFiscal ? valores.get(capmos.indexOf("CAE")) : valores.get(capmos.indexOf("Cae"));
 
         String caeFchaVto = !esFiscal ? valores.get(capmos.indexOf("CAEFchVto")) : valores.get(capmos.indexOf("Fch_venc_Cae"));
@@ -321,7 +306,7 @@ public class GestorDBFE_Electronica extends GestorDB {
                         } catch (IOException ex) {
                             LoggerBitacora.getInstance(GestorDBFE_Electronica.class).logueadorMainero.log("un Mansaje", Priority.ERROR,
                                     "No se pudo borrar el CAE en el archivo de respado - " + ex.toString() + " - " + ex.getMessage(), null);
-                        }                        
+                        }
                     }
                 } else {
                     LoggerBitacora.getInstance(GestorDBFE_Electronica.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
@@ -378,7 +363,7 @@ public class GestorDBFE_Electronica extends GestorDB {
                         + ", ft_electronica.fte_fecha_cae='" + fechaVto
                         + "' where ft_electronica.fte_tipo=" + tipoCompro + " and ft_electronica.fte_boca="
                         + sucursal + " and ft_electronica.fte_comprobante=" + numeroCompro;
-                
+
                 System.out.println("updating : " + con);
                 /*      LoggerBitacora.getInstance(GestorDBFE_Electronica.class).logueadorMainero.log("un Mensaje", Priority.INFO,
                         "Consulta  updating: " + con + " ******* intento: " + intentosDeGuardarCAE, null);*/
