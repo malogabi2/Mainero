@@ -163,7 +163,14 @@ public class GestorDBFE_Electronica extends GestorDB {
         int numeroCompro = Integer.valueOf(String.valueOf(parametros[0]));
         int sucursalCompro = Integer.valueOf(String.valueOf(parametros[1]));
         int tipoCompro = Integer.valueOf(String.valueOf(parametros[2]));
-        String con = "select ft_electronica.fte_tipo,ft_electronica.fte_boca,ft_electronica.fte_comprobante, ft_electronica.fte_razon_social,ft_electronica.fte_fecha,ft_electronica.fte_cuit,ft_electronica.fte_responsable,ft_electronica.fte_gravado,ft_electronica.fte_1, ft_electronica.fte_iva, ft_electronica.fte_2, ft_electronica.fte_exento, ft_electronica.fte_rg3337,ft_electronica.fte_tucuman,ft_electronica.fte_3,ft_electronica.fte_4, ft_electronica.fte_total, ft_electronica.fte_tipo_cont,ft_electronica.fte_cae,ft_electronica.fte_fecha_cae from ft_electronica  where ft_electronica.fte_tipo=" + tipoCompro + " and ft_electronica.fte_boca=" + sucursalCompro + " and ft_electronica.fte_comprobante=" + numeroCompro + " order by ft_electronica.fte_tipo desc,ft_electronica.fte_boca desc,ft_electronica.fte_comprobante ";
+        String con = "select ft_electronica.fte_tipo,ft_electronica.fte_boca,ft_electronica.fte_comprobante, " // 1 - 3
+                + "ft_electronica.fte_razon_social,ft_electronica.fte_fecha,ft_electronica.fte_cuit," // 4 - 6
+                + "ft_electronica.fte_responsable,ft_electronica.fte_gravado,ft_electronica.fte_1, " // 7 - 9
+                + "ft_electronica.fte_iva, ft_electronica.fte_2, ft_electronica.fte_exento, " // 10 - 12
+                + "ft_electronica.fte_rg3337,ft_electronica.fte_tucuman,ft_electronica.fte_3,ft_electronica.fte_4," // 13 - 16
+                + " ft_electronica.fte_total, ft_electronica.fte_tipo_cont,ft_electronica.fte_cae," // 17 - 19
+                + "ft_electronica.fte_fecha_cae " // 20
+                + "from ft_electronica  where ft_electronica.fte_tipo=" + tipoCompro + " and ft_electronica.fte_boca=" + sucursalCompro + " and ft_electronica.fte_comprobante=" + numeroCompro + " order by ft_electronica.fte_tipo desc,ft_electronica.fte_boca desc,ft_electronica.fte_comprobante ";
         System.out.println(con);
         ArrayList<Factura> lfac = new ArrayList<Factura>();
         Conectar conectar = this.getConectar();

@@ -16,6 +16,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.bsf.util.StringUtils;
 import org.apache.log4j.Layout;
 import org.apache.log4j.Priority;
 import utiles.logger.LoggerBitacora;
@@ -312,7 +313,12 @@ public class GestorAFactura {
             bw.write(Layout.LINE_SEP);
             bw.write("Imp_neto=" + fac.getImporteGrafado());
             bw.write(Layout.LINE_SEP);
-            bw.write("Impto_liq=" + fac.getImporteIvaInscripto());
+            String imptoLiq = fac.getImporteIvaInscripto() != null && 
+                    !fac.getImporteIvaInscripto().isBlank() &&
+                    !fac.getImporteIvaInscripto().isEmpty() 
+                    ? fac.getImporteIvaInscripto() : fac.getImporteIvaNoInscripto();
+                    
+            bw.write("Impto_liq=" + imptoLiq);
             bw.write(Layout.LINE_SEP);
             bw.write("Impto_liq_rni=0");
             bw.write(Layout.LINE_SEP);
