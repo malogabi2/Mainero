@@ -16,7 +16,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.bsf.util.StringUtils;
 import org.apache.log4j.Layout;
 import org.apache.log4j.Priority;
 import utiles.logger.LoggerBitacora;
@@ -192,11 +191,17 @@ public class GestorAFactura {
             }
         }
         catch (IOException ex) {
-             LoggerBitacora.getInstance(GestorAFactura.class).
+            LoggerBitacora.getInstance(GestorAFactura.class).
                     logueadorMainero.log("un Mensaje", Priority.ERROR, 
                     "Error al armar tributos: " + this.archivoFactura, ex);
             Logger.getLogger(GestorAFactura.class.getName()).log(Level.SEVERE, null, ex);
         }
+        LoggerBitacora.getInstance(GestorAFactura.class).
+                    logueadorMainero.log(Priority.ERROR, 
+                    "Archivo armado: " + bw);
+        
+        Logger.getLogger(GestorAFactura.class.getName()).log(Level.INFO, null, bw);
+        
         return bw;
     }
     
@@ -313,11 +318,16 @@ public class GestorAFactura {
             bw.write(Layout.LINE_SEP);
             bw.write("Imp_neto=" + fac.getImporteGrafado());
             bw.write(Layout.LINE_SEP);
-            String imptoLiq = fac.getImporteIvaInscripto() != null && 
-                    !fac.getImporteIvaInscripto().isBlank() &&
-                    !fac.getImporteIvaInscripto().isEmpty() 
-                    ? fac.getImporteIvaInscripto() : fac.getImporteIvaNoInscripto();
-                    
+            String imptoLiq = "";
+            
+            if(fac.getImporteIvaInscripto() != null && !fac.getImporteIvaInscripto().isBlank() &&
+                    !fac.getImporteIvaInscripto().isEmpty()) {
+                imptoLiq = fac.getImporteIvaInscripto();
+            }
+            else {
+                imptoLiq = fac.getImporteIvaNoInscripto();
+            }
+            
             bw.write("Impto_liq=" + imptoLiq);
             bw.write(Layout.LINE_SEP);
             bw.write("Impto_liq_rni=0");

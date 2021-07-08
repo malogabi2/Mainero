@@ -171,7 +171,9 @@ public class GestorDBFE_Electronica extends GestorDB {
                 + " ft_electronica.fte_total, ft_electronica.fte_tipo_cont,ft_electronica.fte_cae," // 17 - 19
                 + "ft_electronica.fte_fecha_cae " // 20
                 + "from ft_electronica  where ft_electronica.fte_tipo=" + tipoCompro + " and ft_electronica.fte_boca=" + sucursalCompro + " and ft_electronica.fte_comprobante=" + numeroCompro + " order by ft_electronica.fte_tipo desc,ft_electronica.fte_boca desc,ft_electronica.fte_comprobante ";
-        System.out.println(con);
+        LoggerBitacora.getInstance(GestorDBFE_Electronica.class).logueadorMainero.log(Priority.ERROR,
+                        "Consulta " + con);
+        
         ArrayList<Factura> lfac = new ArrayList<Factura>();
         Conectar conectar = this.getConectar();
         if (conectar.isActivaLaConexion()) {
