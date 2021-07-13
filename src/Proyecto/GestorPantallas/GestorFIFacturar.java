@@ -100,9 +100,21 @@ public class GestorFIFacturar {
 
     public void buscarComprobante(String comprobanteNum, int indexSucursal, Object indexTipoComprobante) {
         this.facturaElegida = null;
-        this.facturaElegida = Utilerias.pasarObjetoAFacturas(this.conf.getGestorDBFacturaElectParaBuscar()
+        Factura[] facturas = Utilerias.pasarObjetoAFacturas(this.conf.getGestorDBFacturaElectParaBuscar()
                 .traerDatos(new Object[]{comprobanteNum, this.conf.getUsuarioLogueado()
-                        .mostrarItemSucursal(indexSucursal).getNumero(), ((TipoComprobante)indexTipoComprobante).getNumeroReal()}))[0];
+                        .mostrarItemSucursal(indexSucursal).getNumero(), ((TipoComprobante)indexTipoComprobante).getNumeroReal()}));
+        if(facturas.length > 0) {
+            this.facturaElegida = facturas[0];
+        }
+        else {
+              LoggerBitacora.getInstance(GestorFIFacturar.class)
+                    .logueadorMainero.log(Priority.INFO,
+                        "No se encontro comprobante Num=" + comprobanteNum + " sucursal="
+                                + indexSucursal + " tipo compro = "
+                                + ((TipoComprobante)indexTipoComprobante).getNumeroReal() + " " 
+                                + ((TipoComprobante)indexTipoComprobante).getNombre());
+        }
+        
         this.conf.getGestorDBFacturaElectParaBuscar().traerComprobantesAsociados(facturaElegida);
     }
 
@@ -247,7 +259,12 @@ public class GestorFIFacturar {
         if (this.conf.esFiscalLaSucursal(Integer.valueOf(this.facturaElegida.getSuc_comprobante()))) {           
             long id = buscarIdWSBFE();
             this.conf.setIdWSBFE(buscarIdWSBFE() + 1L);
+            LoggerBitacora.getInstance(GestorFIFacturar.class)
+                    .logueadorMainero.log("un Mensaje", Priority.INFO,
+                        "Antes de armar archivo", null);
             gesf.crearArchivoFacFacturarWBFE(this.conf.getTokServer2(), this.conf.getCuit(), (id + 1L), this.facturaElegida);
+            LoggerBitacora.getInstance(GestorFIFacturar.class).logueadorMainero.log("un Mensaje", Priority.ERROR,
+                        "Despues Guardar Archivo", null);
             gecom.facturar(true, this.facturaElegida); 
             GestorAConfiguracion gcon = new GestorAConfiguracion(this.conf);
             gcon.guardar(this.conf);

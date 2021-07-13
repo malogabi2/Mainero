@@ -288,6 +288,7 @@ public class GestorAFactura {
     }
 
     public void crearArchivoFacFacturarWBFE(TokenSign tok, String cuit, long id, Factura fac) {
+        String msn = "";
         try {
             File file = new File(this.archivoFactura);
             FileWriter fw = new FileWriter(file.getAbsoluteFile());
@@ -320,13 +321,23 @@ public class GestorAFactura {
             bw.write(Layout.LINE_SEP);
             String imptoLiq = "";
             
-            if(fac.getImporteIvaInscripto() != null && !fac.getImporteIvaInscripto().isBlank() &&
-                    !fac.getImporteIvaInscripto().isEmpty()) {
+            LoggerBitacora.getInstance(GestorAFactura.class).
+                    logueadorMainero.log(Priority.INFO, 
+                    "Iva Debito ivaIns " + fac.getImporteIvaInscripto() + " Iva NoInst "
+                    + fac.getImporteIvaNoInscripto());
+            
+            if(fac.getImporteIvaInscripto() != null &&
+                    !fac.getImporteIvaInscripto().isEmpty() && 
+                    (Double.valueOf(fac.getImporteIvaInscripto()) > 0.0)) {
                 imptoLiq = fac.getImporteIvaInscripto();
             }
             else {
                 imptoLiq = fac.getImporteIvaNoInscripto();
             }
+            
+             LoggerBitacora.getInstance(GestorAFactura.class).
+                    logueadorMainero.log(Priority.INFO, 
+                    "Impto_liq = " + imptoLiq);
             
             bw.write("Impto_liq=" + imptoLiq);
             bw.write(Layout.LINE_SEP);
@@ -372,14 +383,25 @@ public class GestorAFactura {
             bw.write("Imp_total1=" + fac.getImporteTotal());
             bw.write(Layout.LINE_SEP);
             bw.write("Iva_id1=4");
+            msn = bw.toString();
+            LoggerBitacora.getInstance(GestorAFactura.class).
+                    logueadorMainero.log(Priority.INFO, " msn: " + 
+                    msn);
             bw.close();
         }
-        catch (IOException ex) {
+        catch (Exception ex) {
              LoggerBitacora.getInstance(GestorAFactura.class).
                     logueadorMainero.log("un Mensaje", Priority.ERROR, 
                     "Error al crear archivo fac wbfe: " + this.archivoFactura, ex);
             Logger.getLogger(GestorAConfiguracion.class.getName()).log(Level.SEVERE, null, ex);
         }
+        finally {
+            LoggerBitacora.getInstance(GestorAFactura.class).
+                    logueadorMainero.log("un Mensaje", Priority.ERROR, 
+                    "file : " + msn, null);
+            Logger.getLogger(GestorAConfiguracion.class.getName()).log(Level.SEVERE, null, msn);
+        }
+        
     }
 }
 
